@@ -1,0 +1,32 @@
+{
+  "id": "SCOUT-20260822-01",
+  "owner": "coordinator",
+  "branch": "agent/scout-prioritized-todo",
+  "root_sha": "cdc74975f620853d76991c84f862aa90833c28a1",
+  "write_paths": [
+    "TODO.md",
+    "experiments/SCOUT-20260822-01/**"
+  ],
+  "read_dependencies": [
+    "PROJECT_INTENT.md",
+    "AGENTS.md",
+    "control/**",
+    ".github/workflows/**",
+    "benchmarks/**",
+    "knowledge/**",
+    "src/**",
+    "tools/**",
+    "open issues and pull requests",
+    "current branch/ruleset state"
+  ],
+  "status": "active",
+  "problem": "Scout the current Simsimmer repository and produce a dependency-ordered, decision-relevant backlog that prioritizes proving the live flywheel before expanding scope.",
+  "success_criteria": [
+    "TODO is ordered by dependency and risk rather than topic",
+    "each P0/P1 item has an observable acceptance gate",
+    "existing open work is linked instead of duplicated",
+    "control-plane maturity is distinguished from implementation/learning maturity",
+    "residuals and deferred work are explicit"
+  ],
+  "rollback_point": "cdc74975f620853d76991c84f862aa90833c28a1"
+}
