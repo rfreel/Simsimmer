@@ -24,3 +24,5 @@ jobs:
         run: python decompose-task-space/spec/simulate_spec_basis.py --limit 16 > /tmp/spec-probes.json
       - name: Flywheel architecture simulation replay
         run: python tools/simulate_flywheel_architecture.py --out /tmp/flywheel-receipt.json
+      - name: Dependency-atomic bead graph verification
+        run: python experiments/decomposition-policy/verify_decomposition_beads.py
