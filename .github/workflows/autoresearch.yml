@@ -7,13 +7,21 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: simsimmer-autoresearch
+  group: simsimmer-autoresearch-ratchet
   cancel-in-progress: false
 jobs:
   research:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout contained ratchet lane
+        uses: actions/checkout@v4
+        with:
+          ref: autoresearch/ratchet
+          fetch-depth: 0
+      - name: Sync reviewed code from main
+        run: |
+          git fetch origin main
+          git merge --no-edit origin/main
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -28,7 +36,18 @@ jobs:
         run: python autoresearch.py --variant compress --iterations 24 --seed $(( ${{ github.run_id }} + 3 )) --write
       - name: Verify after research
         run: python -m unittest discover -s tests -v
-      - name: Persist ratchet state
+      - name: Enforce autoresearch write boundary
+        shell: bash
+        run: |
+          mapfile -t changed < <(git status --porcelain=v1 | sed -E 's/^.. //' | sort -u)
+          printf '%s\n' "${changed[@]}"
+          for path in "${changed[@]}"; do
+            case "$path" in
+              state/*) ;;
+              *) echo "ERROR: autoresearch escaped state/ write boundary: $path" >&2; exit 1 ;;
+            esac
+          done
+      - name: Persist ratchet state only
         run: |
           git config user.name "simsimmer-autoresearch"
           git config user.email "simsimmer-autoresearch@users.noreply.github.com"
@@ -37,5 +56,5 @@ jobs:
             echo "No state delta"
           else
             git commit -m "autoresearch: scheduled simulator batch"
-            git push
+            git push origin HEAD:autoresearch/ratchet
           fi

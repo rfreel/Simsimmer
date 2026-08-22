@@ -1,0 +1,26 @@
+{
+  "schema": "simsimmer/authority-v1",
+  "precedence": [
+    "human_explicit_instruction",
+    "PROJECT_INTENT.md",
+    "control/repository.manifest.json",
+    "AGENTS.md",
+    "docs/specs/*",
+    "docs/decisions/current ADRs",
+    "directory-local instructions",
+    "task/experiment contract",
+    "implementation",
+    "generated reports",
+    "historical notes"
+  ],
+  "candidate_control_forbidden": [
+    "frozen success criteria",
+    "holdout identity",
+    "evaluator identity",
+    "hard resource limits",
+    "promotion gate",
+    "canonical provenance",
+    "repository authority precedence"
+  ],
+  "rule": "lower-precedence artifacts cannot silently override higher-precedence authority"
+}
