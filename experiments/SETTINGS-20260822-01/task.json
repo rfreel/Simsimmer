@@ -1,0 +1,32 @@
+{
+  "id": "SETTINGS-20260822-01",
+  "owner": "coordinator",
+  "branch": "agent/github-settings-hardening",
+  "root_sha": "d788eb6dea0845c550e14620e58e2b4285c9973c",
+  "write_paths": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/autoresearch.yml",
+    "control/github-settings.target.json",
+    "docs/GITHUB_SETTINGS.md",
+    "experiments/SETTINGS-20260822-01/**"
+  ],
+  "read_dependencies": [
+    "AGENTS.md",
+    "docs/OWNERSHIP.md",
+    ".github/workflows/ci.yml",
+    ".github/workflows/autoresearch.yml",
+    ".github/dependabot.yml",
+    "current GitHub repository metadata",
+    "current main branch protection state"
+  ],
+  "status": "active",
+  "problem": "Apply the simulator-selected GitHub Actions and repository-settings hardening that can be encoded and verified from repository state, while preserving an explicit residual for settings that require GitHub administrative UI/API capabilities not exposed by the connected tool.",
+  "success_criteria": [
+    "CI and scheduled autoresearch use an explicit Ubuntu runner image instead of ubuntu-latest",
+    "the desired external GitHub settings are recorded as machine-readable target state",
+    "human-facing setup instructions distinguish observed state, applied repository-controlled state, and UI-only residuals",
+    "existing CI remains green",
+    "no evaluator, tests, research controller, or state files are modified"
+  ],
+  "rollback_point": "d788eb6dea0845c550e14620e58e2b4285c9973c"
+}
