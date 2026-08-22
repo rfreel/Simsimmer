@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import json
+import re
 import subprocess
-import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,8 +13,11 @@ REQUIRED = [
     "docs/architecture/FLYWHEEL.md", "docs/specs/EXPERIMENT_CONTRACT.md",
     "decompose-task-space/spec/SPEC_DISTINCTION_BASIS.md",
     "decompose-task-space/spec/EXTENSION_PROTOCOL.md",
+    ".github/workflows/ci.yml", ".github/workflows/autoresearch.yml",
+    ".github/dependabot.yml",
 ]
 FORBIDDEN_TRACKED_PREFIXES = ("traces/raw/", "generated/tmp/", "artifacts/tmp/")
+FULL_COMMIT_SHA = re.compile(r"[0-9a-f]{40}")
 
 
 def fail(msg: str) -> None:
@@ -28,6 +31,32 @@ def tracked() -> list[str]:
     except Exception as exc:
         fail(f"cannot enumerate tracked files: {exc}")
     return [x for x in out.splitlines() if x]
+
+
+def external_action_refs(workflow: Path) -> list[str]:
+    refs: list[str] = []
+    for raw in workflow.read_text().splitlines():
+        line = raw.split("#", 1)[0].strip()
+        match = re.search(r"(?:^|\s)uses:\s*([^\s]+)", line)
+        if not match:
+            continue
+        ref = match.group(1)
+        if ref.startswith("./"):
+            continue
+        refs.append(ref)
+    return refs
+
+
+def require_pinned_actions(workflow: Path) -> None:
+    for ref in external_action_refs(workflow):
+        if "@" not in ref:
+            fail(f"external action missing ref in {workflow.relative_to(ROOT)}: {ref}")
+        _name, revision = ref.rsplit("@", 1)
+        if not FULL_COMMIT_SHA.fullmatch(revision):
+            fail(
+                f"external action is not pinned to a full commit SHA in "
+                f"{workflow.relative_to(ROOT)}: {ref}"
+            )
 
 
 def main() -> int:
@@ -50,10 +79,34 @@ def main() -> int:
         if path.startswith(FORBIDDEN_TRACKED_PREFIXES):
             fail(f"ephemeral/raw output tracked as canonical Git state: {path}")
 
-    workflow = (ROOT / ".github/workflows/autoresearch.yml").read_text()
-    for token in ("ref: autoresearch/ratchet", "state/*", "escaped state/ write boundary"):
-        if token not in workflow:
+    ci_path = ROOT / ".github/workflows/ci.yml"
+    autoresearch_path = ROOT / ".github/workflows/autoresearch.yml"
+    for workflow_path in (ci_path, autoresearch_path):
+        require_pinned_actions(workflow_path)
+
+    ci = ci_path.read_text()
+    if "contents: read" not in ci:
+        fail("CI must keep GITHUB_TOKEN contents permission read-only")
+    if "persist-credentials: false" not in ci:
+        fail("CI checkout must not persist Git credentials")
+
+    autoresearch = autoresearch_path.read_text()
+    for token in (
+        "ref: autoresearch/ratchet",
+        "ratchet lane contains non-state divergence",
+        "SIMSIMMER_SYNC_SHA",
+        "autoresearch escaped state/ write boundary",
+        "ratchet persistence contains non-state path",
+        "git push origin HEAD:autoresearch/ratchet",
+    ):
+        if token not in autoresearch:
             fail(f"autoresearch containment token missing: {token}")
+    if "contents: write" not in autoresearch:
+        fail("scheduled ratchet requires explicit contents: write permission")
+
+    dependabot = (ROOT / ".github/dependabot.yml").read_text()
+    if 'package-ecosystem: "github-actions"' not in dependabot:
+        fail("Dependabot must track pinned GitHub Actions revisions")
 
     ext = json.loads((ROOT / "control/external_references.json").read_text())
     for ref in ext.get("references", []):
@@ -62,7 +115,7 @@ def main() -> int:
         if ref.get("kind") == "library-artifact" and not ref.get("sha256"):
             fail(f"unhashed library artifact: {ref.get('id')}")
 
-    print("OK: repository contracts, containment, provenance pins, and canonical/derived boundary")
+    print("OK: repository contracts, Actions pins/containment, provenance pins, and canonical/derived boundary")
     return 0
 
 
