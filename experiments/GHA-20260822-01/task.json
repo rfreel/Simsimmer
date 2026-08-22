@@ -3,6 +3,7 @@
   "owner": "coordinator",
   "branch": "agent/github-actions-hardening",
   "root_sha": "4c737538fd68780d8e750fc6d5b1b71429c13690",
+  "pull_request": 6,
   "write_paths": [
     ".github/workflows/ci.yml",
     ".github/workflows/autoresearch.yml",
@@ -18,7 +19,7 @@
     "GitHub Actions secure-use guidance",
     "GitHub Actions runtime/release metadata"
   ],
-  "status": "active",
+  "status": "blocked_hosted_runner_verification",
   "problem": "Harden Simsimmer GitHub Actions and repair the scheduled ratchet synchronization boundary without misclassifying the observed zero-step hosted-runner failure as a repository test failure.",
   "success_criteria": [
     "external actions use current Node 24-compatible releases pinned to full commit SHAs",
@@ -29,9 +30,10 @@
     "the pre-step hosted-runner incident remains explicitly separated from repository-controlled failures"
   ],
   "verification": [
-    "simulate branch histories: ratchet behind main; ratchet state ahead plus main code ahead; non-state ratchet drift; conflicting state edits",
-    "run scripts/doctor.py",
-    "run repository CI commands through GitHub Actions when hosted runners execute steps"
+    "branch-history simulation passed expected behavior for behind-only sync, state/code divergence, non-state drift rejection, and state-conflict fail-closed",
+    "changed Python AST and workflow YAML syntax checks passed",
+    "GitHub accepted PR #6 workflow run 32584503659 but job 97058737959 failed before step 1 with no steps",
+    "full repository commands remain pending until a hosted runner executes steps"
   ],
   "rollback_point": "4c737538fd68780d8e750fc6d5b1b71429c13690",
   "residuals": [
