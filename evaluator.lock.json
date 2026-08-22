@@ -2,5 +2,6 @@
   "simulator_sha256": "e23846f6009be0623b76442afaa03cccd509d106f6c3bbf3467e73486aff349c",
   "research_seeds": [101, 211, 307, 401],
   "holdout_seeds": [1009, 1103, 1201, 1301],
+  "canonical_seeds": [2003, 2011, 2027, 2039],
   "note": "Changing this lock is an evaluator-change task, never a candidate experiment."
 }
