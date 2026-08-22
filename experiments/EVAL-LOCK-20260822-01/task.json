@@ -1,0 +1,30 @@
+{
+  "id": "EVAL-LOCK-20260822-01",
+  "owner": "evaluator-change task",
+  "branch": "agent/evaluator-lock-repair",
+  "root_sha": "5393385954e65c53e63a1d6e9302283e39b5d56e",
+  "write_paths": [
+    "evaluator.lock.json",
+    "experiments/EVAL-LOCK-20260822-01/**"
+  ],
+  "read_dependencies": [
+    "sim/simulator.py",
+    "autoresearch.py",
+    "tests/test_simulator.py",
+    "AGENTS.md"
+  ],
+  "status": "active",
+  "problem": "The frozen simulator has been unchanged since bootstrap, but evaluator.lock.json contains a simulator_sha256 that does not match the simulator bytes, causing every autoresearch invocation to fail closed before evaluation.",
+  "success_criteria": [
+    "the lock records the SHA-256 independently emitted by autoresearch for the unchanged simulator bytes",
+    "sim/simulator.py remains byte-for-byte unchanged",
+    "the existing simulator tests pass without weakening or changing tests",
+    "the autoresearch smoke command executes normally"
+  ],
+  "rollback_point": "5393385954e65c53e63a1d6e9302283e39b5d56e",
+  "evidence": {
+    "expected_lock_sha256": "e23846f6009be0623b76442afaa03cccd509d106f6c3bbf3467e73486aff349c",
+    "runner_observed_simulator_sha256": "be6a39b09e522778c00ffa4d14258140f897110f9eb9cef53bbd198a960c9320",
+    "simulator_blob_sha_unchanged_since_bootstrap": "48cbb26065c97b472b2f133950f69394b3132d50"
+  }
+}
