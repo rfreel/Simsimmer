@@ -1,7 +1,7 @@
 name: ci
 on:
-  push:
-  pull_request:
+  push: {}
+  pull_request: {}
 permissions:
   contents: read
 jobs:
@@ -9,9 +9,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Runner diagnostics
+        if: github.ref == 'refs/heads/fix/actions-diagnostics-20260822-1500' || github.event_name == 'workflow_dispatch'
+        run: |
+          echo "===== Runner diagnostics ====="
+          echo "Runner: $(uname -a)"
+          echo "GitHub event: $GITHUB_EVENT_NAME"
+          date
+          whoami
+          env
+          ls -la
+          df -h
+          echo "==============================="
       - name: Repository distinction doctor
         run: python scripts/doctor.py
       - name: Simulator tests
