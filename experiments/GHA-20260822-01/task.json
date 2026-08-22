@@ -1,0 +1,40 @@
+{
+  "id": "GHA-20260822-01",
+  "owner": "coordinator",
+  "branch": "agent/github-actions-hardening",
+  "root_sha": "4c737538fd68780d8e750fc6d5b1b71429c13690",
+  "write_paths": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/autoresearch.yml",
+    ".github/dependabot.yml",
+    "scripts/doctor.py",
+    "experiments/GHA-20260822-01/**"
+  ],
+  "read_dependencies": [
+    "PROJECT_INTENT.md",
+    "AGENTS.md",
+    "docs/OWNERSHIP.md",
+    "control/repository.manifest.json",
+    "GitHub Actions secure-use guidance",
+    "GitHub Actions runtime/release metadata"
+  ],
+  "status": "active",
+  "problem": "Harden Simsimmer GitHub Actions and repair the scheduled ratchet synchronization boundary without misclassifying the observed zero-step hosted-runner failure as a repository test failure.",
+  "success_criteria": [
+    "external actions use current Node 24-compatible releases pinned to full commit SHAs",
+    "the ratchet lane is checked for state-only divergence before repository code executes",
+    "main/ratchet divergence synchronizes without history rewriting and fails closed on conflicts",
+    "autoresearch cannot silently create commits or persist non-state changes",
+    "CI enforces the action-pinning and containment contract",
+    "the pre-step hosted-runner incident remains explicitly separated from repository-controlled failures"
+  ],
+  "verification": [
+    "simulate branch histories: ratchet behind main; ratchet state ahead plus main code ahead; non-state ratchet drift; conflicting state edits",
+    "run scripts/doctor.py",
+    "run repository CI commands through GitHub Actions when hosted runners execute steps"
+  ],
+  "rollback_point": "4c737538fd68780d8e750fc6d5b1b71429c13690",
+  "residuals": [
+    "GitHub-hosted runner entitlement, billing, repository Actions settings, or platform storage failures are outside repository code and require a normal hosted job to disambiguate"
+  ]
+}
