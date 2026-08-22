@@ -9,6 +9,8 @@
     ".github/workflows/autoresearch.yml",
     ".github/dependabot.yml",
     "scripts/doctor.py",
+    "docs/architecture/FLYWHEEL.md",
+    "docs/specs/EXPERIMENT_CONTRACT.md",
     "experiments/GHA-20260822-01/**"
   ],
   "read_dependencies": [
@@ -19,24 +21,28 @@
     "GitHub Actions secure-use guidance",
     "GitHub Actions runtime/release metadata"
   ],
-  "status": "blocked_hosted_runner_verification",
-  "problem": "Harden Simsimmer GitHub Actions and repair the scheduled ratchet synchronization boundary without misclassifying the observed zero-step hosted-runner failure as a repository test failure.",
+  "status": "verified",
+  "problem": "Harden Simsimmer GitHub Actions and repair the scheduled ratchet synchronization boundary while distinguishing GitHub-hosted runner infrastructure failures from repository-controlled failures.",
   "success_criteria": [
     "external actions use current Node 24-compatible releases pinned to full commit SHAs",
     "the ratchet lane is checked for state-only divergence before repository code executes",
     "main/ratchet divergence synchronizes without history rewriting and fails closed on conflicts",
     "autoresearch cannot silently create commits or persist non-state changes",
     "CI enforces the action-pinning and containment contract",
-    "the pre-step hosted-runner incident remains explicitly separated from repository-controlled failures"
+    "hosted-runner failures remain distinct from repository test failures",
+    "production-shaped hosted CI executes all repository gates successfully"
   ],
   "verification": [
     "branch-history simulation passed expected behavior for behind-only sync, state/code divergence, non-state drift rejection, and state-conflict fail-closed",
     "changed Python AST and workflow YAML syntax checks passed",
-    "GitHub accepted PR #6 workflow run 32584503659 but job 97058737959 failed before step 1 with no steps",
-    "full repository commands remain pending until a hosted runner executes steps"
+    "zero-step hosted-runner failure was repeatedly reproduced before repository code executed",
+    "after repository Actions settings were changed, hosted runner execution resumed and exposed repository-controlled failures",
+    "missing repository contracts required by doctor.py were added without weakening doctor.py",
+    "a separately scoped evaluator-lock repair was independently verified without modifying sim/simulator.py or tests",
+    "final production-shaped CI run 32590505520 completed successfully with every normal gate passing"
   ],
   "rollback_point": "4c737538fd68780d8e750fc6d5b1b71429c13690",
   "residuals": [
-    "GitHub-hosted runner entitlement, billing, repository Actions settings, or platform storage failures are outside repository code and require a normal hosted job to disambiguate"
+    "the exact individual repository Actions setting responsible for the earlier zero-step runner-allocation failure was not independently isolated"
   ]
 }
