@@ -5,7 +5,7 @@
   "artifacts": {
     "BEADS.jsonl": {"library_file_id": "file_00000000673881fd9cb016260f0c68cb", "sha256": "326e4a72c98647cde55aaba877c8d654be96cdfe402b52c4718aea51f512aaed", "reconstruction": "concatenate beads/phases/P0.jsonl through P8.jsonl"},
     "BEADS_TODO.md": {"library_file_id": "file_00000000529881fda330a8839a7042f5", "sha256": "f0e657253ed7ebe6ddbe9e370dd0085e6410696bb1157c6c6f91123832773222", "reconstruction": "build_decomposition_beads.py"},
-    "DECOMPOSE_SIM_RECEIPT.json": {"library_file_id": "file_000000005da481fda7f39d120b08070a", "sha256": "c472dcd61dc368584b7eb46585393e672835f827eb44d0199b3936f636fef36b", "repository_copy": "semantically equivalent normalized JSON; original exact bytes remain identified by Library hash"},
+    "DECOMPOSE_SIM_RECEIPT.json": {"library_file_id": "file_000000005da481fda7f39d120b08070a", "sha256": "c472dcd61dc368584b7eb46585393e672835f827eb44d0199b3936f636fef36b", "repository_copy": "normalized semantic JSON used by the repository verifier; original exact artifact identity remains the Library SHA-256"},
     "BEADS_RECEIPT.json": {"library_file_id": "file_00000000c08481fd97fca7ffa0946c91", "sha256": "0c9db4cb5424beb1139a64d1213269bf9abee8f70381725218363e143e1be0b7"}
   },
   "reported_simulator_core_test": {"passed": 7, "total": 7, "status": "PASS", "provenance": "user-provided run summary; no separate Library receipt located in this import"}
