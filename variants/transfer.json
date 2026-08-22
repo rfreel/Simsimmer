@@ -1,0 +1,17 @@
+{
+  "description": "Select for out-of-distribution transfer and rediscovery.",
+  "parameters": ["trace_rate", "reuse_threshold", "generalize_strength", "transfer_weight", "rediscover_weight", "ablate_rate", "compression_rate"],
+  "steps": {
+    "trace_rate": [-0.1, 0.1],
+    "reuse_threshold": [-1, 1],
+    "generalize_strength": [-0.1, 0.1],
+    "transfer_weight": [-0.1, 0.1],
+    "rediscover_weight": [-0.1, 0.1],
+    "ablate_rate": [-0.1, 0.1],
+    "compression_rate": [-0.1, 0.1]
+  },
+  "objective_weights": {"transfer_rate": 15.0, "rediscovery_rate": 8.0},
+  "holdout_regression_floor": -0.02,
+  "holdout_shift": 0.45,
+  "n_tasks": 320
+}
