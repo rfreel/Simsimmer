@@ -28,6 +28,7 @@ class SimulatorTests(unittest.TestCase):
         self.assertEqual(receipt["variant"], "exploit")
         self.assertEqual(receipt["iterations"], 3)
         self.assertEqual(len(receipt["trials"]), 3)
+        self.assertIn("canonical_holdout_fitness", receipt)
         self.assertTrue(all(t["status"] in {"KEEP", "REJECT"} for t in receipt["trials"]))
 
 if __name__ == "__main__":
