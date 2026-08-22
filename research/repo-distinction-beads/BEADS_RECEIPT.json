@@ -1,0 +1,34 @@
+{
+  "applicable_gate_links": 323,
+  "bead_count": 106,
+  "beads_v2_sha256": "2ccd32ff55445cfd01ae68f1172b8711d8d071c035fb9ae842aa5570b781a37b",
+  "changes": {
+    "direct_edges_added": 4,
+    "direct_edges_removed": 32,
+    "records_with_gate_scope_or_metadata_change": 106,
+    "textual_atomicity_repairs": 3
+  },
+  "critical_path_unit_beads": 35,
+  "dag_acyclic": true,
+  "edge_count": 159,
+  "hard_order_anchors_preserved": 11,
+  "initial_frontier": [
+    "RG-P0-01"
+  ],
+  "max_frontier": 10,
+  "redundant_edges": 0,
+  "schema": "repo-distinction/beads-receipt-v2",
+  "sim_receipt_sha256": "943c61c35b2540ad48a54b0e473001fb13c2b98b0a20551be9f7c0bf988435b2",
+  "simulator_core_test": "python -m unittest tests.test_engine -v : 7/7 PASS",
+  "source_v1_sha256": "326e4a72c98647cde55aaba877c8d654be96cdfe402b52c4718aea51f512aaed",
+  "todo_v2_sha256": "6efcc56a77ef31ba6a4a29cbf1649e2af6bdbfe8e956333b35b5d9e35a76e6dc",
+  "verification": {
+    "close_receipts_unique": "PASS",
+    "dag_acyclic": "PASS",
+    "dependency_refs_exist": "PASS",
+    "gate_ids_valid": "PASS",
+    "hard_order_anchors": "PASS",
+    "ids_unique": "PASS",
+    "transitive_redundancy_zero": "PASS"
+  }
+}
