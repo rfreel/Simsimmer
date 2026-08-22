@@ -32,10 +32,9 @@ The selected decomposition rule is: **one decision, mutation boundary, or indepe
 ## First chain
 `RG-P0-01` snapshot canonical inventory + root hash → `RG-P0-02` classify canonical/derived/historical/generated, opening `RG-P0-03` canonical count scanner and `RG-P0-04` canonical hash scanner. In parallel `RG-P0-01` opens `RG-P0-05` bounded saturation vocabulary → `RG-P0-06` status-claim checker. `P0-03 + P0-04 + P0-05` open `RG-P0-07` generated manifest; `P0-01` opens `RG-P0-08` archive stale state; `P0-07 + P0-08` open `RG-P0-09` current-state receipt; `P0-06 + P0-09` open `RG-P0-10` one truth-surface audit command, which unlocks P1.
 
-## Imported artifacts
-- `BEADS.jsonl` — exact 106-record machine-readable graph.
-- `BEADS_TODO.md` — human-readable complete TODO.
-- `DECOMPOSE_SIM_RECEIPT.json` — six-policy same-root simulation receipt.
-- `BEADS_RECEIPT.json` — validated DAG/count/hash receipt.
+## Artifact discipline
+The original 106-record `BEADS.jsonl` and complete `BEADS_TODO.md` are represented by one immutable phase-sharded source under `beads/phases/`. `build_decomposition_beads.py` reconstructs both byte-for-byte and requires their original SHA-256 hashes. `verify_decomposition_beads.py` independently recomputes graph counts, dependency integrity, frontier, critical path, gate coverage, and the 5/5 policy win.
 
-Repository-side verification must recompute hashes, counts, dependencies, frontier, critical path, and gate coverage before this graph is promoted from imported planning evidence to active work.
+The Library simulation receipt is identified by its exact source hash. The repository keeps a normalized JSON copy for semantic verification and explicitly does not claim byte identity for that normalized copy.
+
+Repository-side verification must pass before this graph is promoted from imported planning evidence to active work.
