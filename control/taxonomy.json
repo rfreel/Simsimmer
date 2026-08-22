@@ -1,0 +1,11 @@
+{
+  "schema": "simsimmer/taxonomy-v1",
+  "epistemic_status": ["observed", "inferred", "hypothesis", "verified", "unverified", "unknown"],
+  "work_status": ["backlog", "selected", "active", "blocked", "complete", "failed", "superseded", "dormant"],
+  "authority_status": ["canonical", "authoritative", "advisory", "derived", "historical", "superseded"],
+  "evidence_kind": ["source", "receipt", "test", "benchmark", "holdout", "independent_verification", "demonstration", "synthetic", "external_claim"],
+  "artifact_status": ["source", "generated", "fixture", "release", "temporary", "external"],
+  "failure_class": ["expected", "regression", "environment", "implementation", "data", "resource_exhaustion", "logical_impossibility", "unknown_cause"],
+  "change_class": ["additive", "destructive", "compatible", "breaking", "migration", "refactor", "behavioral"],
+  "research_stage": ["search", "candidate", "training", "validation", "holdout", "promotion", "rediscovery", "ablation", "compression"]
+}

@@ -1,0 +1,5 @@
+{
+  "schema": "simsimmer/spec-relations-v1",
+  "typed_layers": ["task containment","execution dependency","frame","operator","witness/delta"],
+  "relations": ["contains","depends_on","candidate_realizes","requires","provides","precedes","supersedes","verifies","falsifies","derived_from","evidence_for","conflicts_with","alternative_to","complements","instantiates","composes","generalizes","specializes"]
+}

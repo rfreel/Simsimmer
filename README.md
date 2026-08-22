@@ -1,32 +1,38 @@
 # Simsimmer
 
-A simulator-first Karpathy-style autoresearch harness for compounding search policies.
+A simulator-first autoresearch and software-engineering flywheel.
 
-The fixed simulator models the loop:
+Canonical loop:
 
-`SEARCH → SOLVE → VERIFY → TRACE → GENERALIZE → COMPILE/REUSE → TRANSFER → REDISCOVER → ABLATE → COMPRESS → SEARCH FARTHER`
+`SIMULATE → SELECT → GENERATE → EXECUTE → VERIFY → ACCRETE → RELATE → GENERALIZE → COMPILE/REUSE → TRANSFER → REDISCOVER → ABLATE → RE-DERIVE → COMPRESS → SEARCH FARTHER`
 
-The candidate is a small policy vector. Each experiment mutates exactly one parameter, evaluates it on fixed research seeds plus a shifted holdout, keeps only accepted mutations, and records a receipt. The evaluator is hash-locked so ordinary research cannot silently change the target.
+Start here:
+1. `PROJECT_INTENT.md` — mission, scope, objective, authority.
+2. `AGENTS.md` — agent operating contract and write boundaries.
+3. `control/repository.manifest.json` — machine-readable source-of-truth topology.
+4. `docs/OWNERSHIP.md` — multi-agent collision avoidance.
+5. `docs/research/REPOSITORY_DISTINCTIONS.md` — repository distinction taxonomy.
+6. `docs/architecture/FLYWHEEL.md` — compounding architecture.
+7. `decompose-task-space/spec/` — domain-agnostic specification distinction basis and extension protocol.
+
+The existing deterministic autoresearch harness remains the current executable evaluator. It hash-locks its simulator and seed sets, evaluates research/shifted holdout/canonical seeds, and persists accepted research state separately from the trusted evaluator.
+
+## Contained autoresearch
+Scheduled autoresearch runs on `autoresearch/ratchet`, syncs reviewed code from `main`, and fails if the job changes anything outside `state/**`. `main` is the promotion surface, not the scheduled worker's scratch branch.
+
+## Architecture search
+`tools/simulate_flywheel_architecture.py` exhaustively enumerates the declared 10-role × 4-mode architecture space (1,048,576 configurations). Its result is synthetic design evidence, not empirical proof. The bootstrap frontier keeps specification basis and trace compilation native while using hybrid/external adapters where mature tooling can add leverage; the long-term frontier favors repository-native canonical state plus replaceable external adapters.
+
+## External structural reference
+The Doodlestein flywheel is pinned as an advisory reference at `Dicklesworthstone/agentic_coding_flywheel_setup@6c9e68a918375e4717d452fc643480c3110a232d`. Simsimmer borrows manifest-driven setup, planning-first work, task graphs, routing, coordination, memory, and QA feedback while retaining its own simulation/promotion authority.
 
 ## Run
-
 ```bash
+python scripts/doctor.py
 python -m unittest discover -s tests -v
 python autoresearch.py --variant explore --iterations 24 --seed 1
-python autoresearch.py --variant exploit --iterations 24 --seed 2 --write
-python autoresearch.py --variant transfer --iterations 24 --seed 3 --write
-python autoresearch.py --variant compress --iterations 24 --seed 4 --write
+python tools/simulate_flywheel_architecture.py
+python decompose-task-space/spec/simulate_spec_basis.py --limit 128
 ```
 
-Variants are intentionally nonredundant:
-
-- `explore`: search breadth, novelty, and new basins.
-- `exploit`: local improvement around the champion.
-- `transfer`: out-of-distribution transfer and rediscovery.
-- `compress`: ablation and basis compression under a non-regression gate.
-
-`state/champion.json` is the cross-variant ratchet. `state/results.jsonl` is the experiment ledger.
-
-## Reuse for another domain
-
-Keep the JSON policy/receipt contract and replace `sim/simulator.py` with the domain simulator in a separately reviewed evaluator change. Then regenerate `evaluator.lock.json`. Do not let the same autoresearch loop mutate both candidate and evaluator.
+A passing command is evidence, not a claim of global correctness. See the repository distinction contract for status and authority semantics.
