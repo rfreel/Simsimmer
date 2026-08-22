@@ -1,0 +1,13 @@
+{
+  "schema": "simsimmer/vendor-pin-v1",
+  "name": "immutable-context-sim",
+  "version": "1.1.0",
+  "source_artifact": "immutable-context-sim-v1.1.0-tools-source.zip",
+  "source_sha256": "56fdde409c72a293e67929e3e9637a3cb578fbbc5970486ed2b8384d07e13648",
+  "wheel_artifact": "immutable_context_sim-1.1.0-py3-none-any.whl",
+  "wheel_sha256": "1d26408cfdc44a03bc8c01cf32912258422b18375d79a041038d536b70bb7f20",
+  "verification_receipt_sha256": "566fa0217865031a4cf313e0ca1349d42e443b6e5e8b3756ad1a1bf80fa2eb37",
+  "library_verification": {"fresh_extract_tests": "134/134", "compileall": "pass", "clean_venv_install": "pass"},
+  "repository_status": "pinned external source; bytes not vendored in this commit",
+  "authority": "imported implementation lineage, not project intent"
+}
