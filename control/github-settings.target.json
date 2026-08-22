@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "task_id": "SETTINGS-20260822-01",
+  "scope": "rfreel/Simsimmer",
+  "selection_basis": "simulator-selected robust configuration for reliable CI, least privilege, contained scheduled writes, low maintenance, and provenance preservation",
+  "observed_at_selection": {
+    "visibility": "public",
+    "default_branch": "main",
+    "main_protected": false,
+    "required_status_checks": [],
+    "allow_merge_commit": true,
+    "allow_squash_merge": true,
+    "allow_rebase_merge": true,
+    "allow_auto_merge": false,
+    "allow_update_branch": false,
+    "delete_branch_on_merge": false
+  },
+  "repository_controlled_target": {
+    "ci_runner": "ubuntu-24.04",
+    "autoresearch_runner": "ubuntu-24.04",
+    "external_actions_reference_policy": "full_commit_sha",
+    "ci_token_permissions": ["contents:read"],
+    "autoresearch_token_permissions": ["contents:write"],
+    "ci_persist_credentials": false,
+    "ci_cancel_stale_runs": true,
+    "autoresearch_cancel_in_progress": false,
+    "autoresearch_persisted_paths": ["state/**"],
+    "autoresearch_force_push": false
+  },
+  "github_admin_target": {
+    "actions": {
+      "enabled": true,
+      "allowed_actions": "selected",
+      "allow_github_owned_actions": true,
+      "allow_verified_creator_actions": false,
+      "allow_other_action_patterns": [],
+      "require_full_length_sha": true,
+      "default_workflow_permissions": "read",
+      "allow_actions_create_or_approve_pull_requests": false,
+      "fork_pull_request_approval": "all_external_contributors",
+      "send_write_tokens_to_forks": false,
+      "send_secrets_to_forks": false,
+      "log_retention_days": 30
+    },
+    "main_ruleset": {
+      "require_pull_request": true,
+      "required_approvals": 0,
+      "required_status_checks": ["test"],
+      "require_branch_up_to_date": true,
+      "require_conversation_resolution": true,
+      "require_signed_commits": false,
+      "require_linear_history": false,
+      "block_force_push": true,
+      "block_delete": true,
+      "bypass": ["repository_admin_emergency"]
+    },
+    "merge": {
+      "allow_merge_commit": true,
+      "allow_squash_merge": true,
+      "allow_rebase_merge": false,
+      "allow_auto_merge": true,
+      "allow_update_branch": true,
+      "delete_branch_on_merge": true
+    },
+    "security": {
+      "secret_scanning": true,
+      "push_protection": true,
+      "dependabot_alerts": true,
+      "dependabot_security_updates": true,
+      "codeql_default_setup": "defer_until_separate_security_task"
+    }
+  },
+  "residuals": [
+    {
+      "class": "connector_capability",
+      "status": "not_applied",
+      "detail": "The connected GitHub tool does not expose repository Actions policy, ruleset/branch-protection, merge-setting, retention, or security-setting mutation endpoints. These targets must be applied through GitHub administrative UI/API by an actor with repository administration authority."
+    }
+  ]
+}
