@@ -1,0 +1,46 @@
+{
+  "task_id": "GHA-20260822-01",
+  "status": "partial",
+  "root_sha": "4c737538fd68780d8e750fc6d5b1b71429c13690",
+  "verified": {
+    "action_releases": [
+      {
+        "action": "actions/checkout",
+        "release": "v7.0.1",
+        "commit": "3d3c42e5aac5ba805825da76410c181273ba90b1"
+      },
+      {
+        "action": "actions/setup-python",
+        "release": "v7.0.0",
+        "commit": "5fda3b95a4ea91299a34e894583c3862153e4b97"
+      }
+    ],
+    "branch_sync_simulation": {
+      "ratchet_behind_main": "pass",
+      "ratchet_state_ahead_main_code_ahead": "pass",
+      "ratchet_non_state_drift": "rejected_before repository code",
+      "conflicting_state_edits": "failed closed"
+    },
+    "static_checks": {
+      "doctor_python_ast": "pass",
+      "ci_yaml_parse": "pass",
+      "autoresearch_yaml_parse": "pass",
+      "external_action_refs_full_sha": "pass"
+    }
+  },
+  "hosted_runner": {
+    "source_run_id": 32582992482,
+    "fresh_rerun_requested": true,
+    "fresh_job_id": 97058256361,
+    "result": "failure_before_step_1",
+    "steps": [],
+    "logs": "BlobNotFound",
+    "classification": "infrastructure-inconclusive; no repository command executed"
+  },
+  "not_verified": [
+    "scripts/doctor.py executed inside the complete repository checkout",
+    "full Simsimmer test suite on the changed branch",
+    "GitHub-hosted execution of the changed workflows"
+  ],
+  "promotion_note": "Do not interpret the zero-step hosted-runner result as a candidate/test failure. A full pass requires a hosted job that exposes and executes normal steps."
+}
