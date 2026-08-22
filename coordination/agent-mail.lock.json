@@ -6,11 +6,12 @@
   "workspace_version": "0.3.29",
   "pin_policy": "exact-release-tag-and-commit",
   "install": {
-    "installer_ref": "v0.3.29",
-    "command": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/mcp_agent_mail_rust/v0.3.29/install.sh | bash -s -- --version v0.3.29 --verify --no-service --yes",
+    "installer_ref": "ae1183b2489aa03f8852cc4d50221d4940981778",
+    "command": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/mcp_agent_mail_rust/ae1183b2489aa03f8852cc4d50221d4940981778/install.sh | bash -s -- --version v0.3.29 --verify --no-service --yes",
     "notes": [
+      "Installer source is pinned to the release commit, not a movable branch or tag URL.",
+      "The installer fetches the explicit v0.3.29 release and performs checksum/signature verification unless explicitly disabled.",
       "Do not install from main for reproducible Simsimmer coordination.",
-      "The upstream installer performs checksum/signature verification unless explicitly disabled.",
       "--no-service keeps bootstrap non-invasive; start Agent Mail explicitly when coordination is needed."
     ]
   },
