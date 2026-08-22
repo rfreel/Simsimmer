@@ -1,0 +1,27 @@
+{
+  "id": "BRANCH-PROTECT-20260822-01",
+  "owner": "coordinator",
+  "branch": "agent/protect-main-ruleset",
+  "root_sha": "c107266ff0820f71eea28ec91ea99310e7e7de26",
+  "write_paths": [
+    ".github/rulesets/main-protection.json",
+    "experiments/BRANCH-PROTECT-20260822-01/**"
+  ],
+  "read_dependencies": [
+    "control/github-settings.target.json",
+    "docs/GITHUB_SETTINGS.md",
+    "GitHub ruleset import schema",
+    "GitHub ruleset recipe examples"
+  ],
+  "status": "active",
+  "problem": "Produce an import-ready active ruleset for main because the connected GitHub tool does not expose repository ruleset or branch-protection mutation endpoints.",
+  "success_criteria": [
+    "target only the default branch",
+    "require pull requests with zero mandatory human approvals",
+    "require the test status check with strict up-to-date semantics",
+    "require review-thread resolution",
+    "block force pushes and deletion",
+    "use GitHub's importable ruleset JSON schema"
+  ],
+  "rollback_point": "c107266ff0820f71eea28ec91ea99310e7e7de26"
+}
