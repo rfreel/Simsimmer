@@ -1,0 +1,72 @@
+{
+  "canonical_holdout": {
+    "active_basis": 0.16351485,
+    "compute_per_solve": 5.96526281,
+    "compute_per_task": 3.15830201,
+    "fitness": 46.33964696,
+    "rediscovery_rate": 0.00128866,
+    "reusable_yield": 0.31122095,
+    "solved_rate": 0.52994792,
+    "transfer_rate": 0.06007188,
+    "verification_precision": 0.96393523
+  },
+  "canonical_holdout_fitness": 46.33964696,
+  "evaluator_sha256": "e23846f6009be0623b76442afaa03cccd509d106f6c3bbf3467e73486aff349c",
+  "holdout": {
+    "active_basis": 0.09102326,
+    "compute_per_solve": 5.9651945,
+    "compute_per_task": 3.15788013,
+    "fitness": 46.44123334,
+    "rediscovery_rate": 0.00168919,
+    "reusable_yield": 0.161929,
+    "solved_rate": 0.53125,
+    "transfer_rate": 0.06513992,
+    "verification_precision": 0.95092124
+  },
+  "initial_holdout_objective": 48.39155414,
+  "iterations": 12,
+  "keeps": 1,
+  "objective_holdout": 50.69967928,
+  "objective_train": 52.26558824,
+  "policy": {
+    "ablate_rate": 0.2,
+    "active_basis_cap": 24,
+    "compression_rate": 0.35,
+    "generalize_strength": 0.45,
+    "novelty_budget": 0.35,
+    "rediscover_weight": 0.25,
+    "reuse_threshold": 3,
+    "search_breadth": 5,
+    "search_depth": 4,
+    "trace_rate": 0.55,
+    "transfer_weight": 0.35,
+    "verify_rate": 0.55
+  },
+  "timestamp_utc": "2026-08-22T14:40:28.104580+00:00",
+  "train": {
+    "active_basis": 0.0722872,
+    "compute_per_solve": 5.81080331,
+    "compute_per_task": 3.15753061,
+    "fitness": 47.90621324,
+    "rediscovery_rate": 0.0,
+    "reusable_yield": 0.07794313,
+    "solved_rate": 0.54492188,
+    "transfer_rate": 0.06169813,
+    "verification_precision": 0.96750623
+  },
+  "trials": [
+    {"holdout_delta": 2.30812514, "holdout_score": 50.69967928, "hypothesis": "search_breadth+1", "iteration": 1, "status": "KEEP", "train_gain": 2.70740252, "train_score": 52.26558824},
+    {"holdout_delta": -0.90622976, "holdout_score": 49.79344953, "hypothesis": "search_breadth+2", "iteration": 2, "status": "REJECT", "train_gain": -0.57541987, "train_score": 51.69016837},
+    {"holdout_delta": -6.47961575, "holdout_score": 44.22006354, "hypothesis": "novelty_budget-0.15", "iteration": 3, "status": "REJECT", "train_gain": 0.14554449, "train_score": 52.41113273},
+    {"holdout_delta": 0.14525533, "holdout_score": 50.84493462, "hypothesis": "active_basis_cap-4", "iteration": 4, "status": "REJECT", "train_gain": -2.0591331, "train_score": 50.20645514},
+    {"holdout_delta": -1.54836147, "holdout_score": 49.15131781, "hypothesis": "trace_rate+0.1", "iteration": 5, "status": "REJECT", "train_gain": -2.76561274, "train_score": 49.4999755},
+    {"holdout_delta": -6.47961575, "holdout_score": 44.22006354, "hypothesis": "novelty_budget-0.15", "iteration": 6, "status": "REJECT", "train_gain": 0.14554449, "train_score": 52.41113273},
+    {"holdout_delta": -5.19744034, "holdout_score": 45.50223895, "hypothesis": "search_depth-1", "iteration": 7, "status": "REJECT", "train_gain": -1.75642326, "train_score": 50.50916498},
+    {"holdout_delta": -0.74085213, "holdout_score": 49.95882715, "hypothesis": "novelty_budget+0.05", "iteration": 8, "status": "REJECT", "train_gain": -3.82455749, "train_score": 48.44103075},
+    {"holdout_delta": 0.4531748, "holdout_score": 51.15285408, "hypothesis": "rediscover_weight-0.1", "iteration": 9, "status": "REJECT", "train_gain": -3.77868578, "train_score": 48.48690246},
+    {"holdout_delta": -6.02889207, "holdout_score": 44.67078721, "hypothesis": "search_depth-2", "iteration": 10, "status": "REJECT", "train_gain": -2.49511595, "train_score": 49.77047229},
+    {"holdout_delta": 1.01956197, "holdout_score": 51.71924125, "hypothesis": "trace_rate-0.1", "iteration": 11, "status": "REJECT", "train_gain": -4.02317462, "train_score": 48.24241362},
+    {"holdout_delta": -2.42280175, "holdout_score": 48.27687754, "hypothesis": "generalize_strength+0.1", "iteration": 12, "status": "REJECT", "train_gain": -2.45330997, "train_score": 49.81227827}
+  ],
+  "variant": "explore"
+}
