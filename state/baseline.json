@@ -1,0 +1,16 @@
+{
+  "policy": {
+    "search_breadth": 4,
+    "search_depth": 4,
+    "verify_rate": 0.55,
+    "trace_rate": 0.55,
+    "reuse_threshold": 3,
+    "generalize_strength": 0.45,
+    "transfer_weight": 0.35,
+    "rediscover_weight": 0.25,
+    "ablate_rate": 0.20,
+    "compression_rate": 0.35,
+    "active_basis_cap": 24,
+    "novelty_budget": 0.35
+  }
+}

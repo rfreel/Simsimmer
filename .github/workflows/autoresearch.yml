@@ -1,0 +1,41 @@
+name: scheduled-autoresearch
+on:
+  workflow_dispatch:
+  schedule:
+    # Twice daily. Odd minute reduces shared-runner cron contention.
+    - cron: '17 1,13 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: simsimmer-autoresearch
+  cancel-in-progress: false
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -v
+      - name: Explore
+        run: python autoresearch.py --variant explore --iterations 24 --seed ${{ github.run_id }} --write
+      - name: Exploit
+        run: python autoresearch.py --variant exploit --iterations 24 --seed $(( ${{ github.run_id }} + 1 )) --write
+      - name: Transfer
+        run: python autoresearch.py --variant transfer --iterations 24 --seed $(( ${{ github.run_id }} + 2 )) --write
+      - name: Compress
+        run: python autoresearch.py --variant compress --iterations 24 --seed $(( ${{ github.run_id }} + 3 )) --write
+      - name: Verify after research
+        run: python -m unittest discover -s tests -v
+      - name: Persist ratchet state
+        run: |
+          git config user.name "simsimmer-autoresearch"
+          git config user.email "simsimmer-autoresearch@users.noreply.github.com"
+          git add state/
+          if git diff --cached --quiet; then
+            echo "No state delta"
+          else
+            git commit -m "autoresearch: scheduled simulator batch"
+            git push
+          fi

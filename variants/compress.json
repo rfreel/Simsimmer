@@ -1,0 +1,17 @@
+{
+  "description": "Ablate and compress while preserving capability.",
+  "parameters": ["reuse_threshold", "ablate_rate", "compression_rate", "active_basis_cap", "search_breadth", "search_depth"],
+  "steps": {
+    "reuse_threshold": [-1, 1],
+    "ablate_rate": [-0.1, 0.1],
+    "compression_rate": [-0.1, 0.1],
+    "active_basis_cap": [-8, -4, 4],
+    "search_breadth": [-1, 1],
+    "search_depth": [-1, 1]
+  },
+  "objective_weights": {"active_basis": 0.8, "compute_per_task": 1.8, "transfer_rate": 6.0},
+  "holdout_regression_floor": -0.01,
+  "compression_score_tolerance": 0.03,
+  "holdout_shift": 0.30,
+  "n_tasks": 256
+}
