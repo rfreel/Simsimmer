@@ -12,11 +12,17 @@ Canonical pin: `coordination/agent-mail.lock.json`
 - release: `v0.3.29`
 - release commit: `ae1183b2489aa03f8852cc4d50221d4940981778`
 
-Install only from the pinned release:
+Install only with the release-commit-pinned installer:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/mcp_agent_mail_rust/v0.3.29/install.sh \
+curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/mcp_agent_mail_rust/ae1183b2489aa03f8852cc4d50221d4940981778/install.sh \
   | bash -s -- --version v0.3.29 --verify --no-service --yes
+```
+
+Or run:
+
+```bash
+bash coordination/install-agent-mail.sh
 ```
 
 Then verify:
@@ -64,7 +70,7 @@ Agent Mail messages and reservations may be cited as coordination evidence, but 
 
 From the active Simsimmer checkout:
 
-1. Install the pinned Agent Mail release.
+1. Run `bash coordination/install-agent-mail.sh`.
 2. Start Agent Mail explicitly; the pin uses `--no-service` so bootstrap does not silently install a background service.
 3. Register/ensure the checkout as the Agent Mail project using its absolute path.
 4. Register the active coding agent with its actual program/model metadata.
