@@ -19,7 +19,7 @@
     "current GitHub repository metadata",
     "current main branch protection state"
   ],
-  "status": "active",
+  "status": "verified_repo_controlled_partial_external",
   "problem": "Apply the simulator-selected GitHub Actions and repository-settings hardening that can be encoded and verified from repository state, while preserving an explicit residual for settings that require GitHub administrative UI/API capabilities not exposed by the connected tool.",
   "success_criteria": [
     "CI and scheduled autoresearch use an explicit Ubuntu runner image instead of ubuntu-latest",
@@ -27,6 +27,27 @@
     "human-facing setup instructions distinguish observed state, applied repository-controlled state, and UI-only residuals",
     "existing CI remains green",
     "no evaluator, tests, research controller, or state files are modified"
+  ],
+  "verification": {
+    "pull_request": 9,
+    "workflow_run": 32591562890,
+    "job": 97076106245,
+    "conclusion": "success",
+    "passed_steps": [
+      "Checkout",
+      "Set up Python",
+      "Repository distinction doctor",
+      "Simulator tests",
+      "Specification basis contract tests",
+      "Autoresearch smoke",
+      "Specification scheduler smoke",
+      "Flywheel architecture simulation replay",
+      "Dependency-atomic bead graph verification"
+    ],
+    "runner_image": "ubuntu-24.04"
+  },
+  "residuals": [
+    "GitHub administrative settings in control/github-settings.target.json are target state only because the connected tool exposes no mutation endpoint for Actions policy, rulesets/branch protection, merge preferences, retention, or code-security switches."
   ],
   "rollback_point": "d788eb6dea0845c550e14620e58e2b4285c9973c"
 }
