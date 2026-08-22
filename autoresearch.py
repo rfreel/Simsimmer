@@ -17,6 +17,7 @@ STATE_DIR = ROOT / "state"
 RESULTS = STATE_DIR / "results.jsonl"
 RESEARCH_SEEDS = [101, 211, 307, 401]
 HOLDOUT_SEEDS = [1009, 1103, 1201, 1301]
+CANONICAL_SEEDS = [2003, 2011, 2027, 2039]
 
 
 def sha256(path: Path) -> str:
@@ -28,6 +29,8 @@ def check_lock() -> None:
     got = sha256(SIM)
     if got != lock["simulator_sha256"]:
         raise SystemExit(f"evaluator lock mismatch: expected {lock['simulator_sha256']} got {got}")
+    if lock.get("research_seeds") != RESEARCH_SEEDS or lock.get("holdout_seeds") != HOLDOUT_SEEDS or lock.get("canonical_seeds") != CANONICAL_SEEDS:
+        raise SystemExit("evaluator seed lock mismatch")
 
 
 def load_variant(name: str) -> dict:
@@ -39,9 +42,7 @@ def state_path(name: str) -> Path:
 
 
 def load_policy(name: str) -> Dict[str, float]:
-    path = state_path(name)
-    if path.exists():
-        return normalize_policy(json.loads(path.read_text())["policy"])
+    # Every variant starts from the shared ratchet. Variant state is a receipt, not a private lineage.
     champion = STATE_DIR / "champion.json"
     if champion.exists():
         return normalize_policy(json.loads(champion.read_text())["policy"])
@@ -74,6 +75,10 @@ def evaluate(policy: Dict[str, float], variant: dict):
     train = aggregate(policy, RESEARCH_SEEDS, n_tasks=variant.get("n_tasks", 256), shift=0.0)
     holdout = aggregate(policy, HOLDOUT_SEEDS, n_tasks=variant.get("n_tasks", 256), shift=variant.get("holdout_shift", 0.25))
     return train, holdout
+
+
+def canonical_evaluate(policy: Dict[str, float]):
+    return aggregate(policy, CANONICAL_SEEDS, n_tasks=384, shift=0.35)
 
 
 def main() -> int:
@@ -125,6 +130,7 @@ def main() -> int:
             current_score, current_holdout = c_score, c_holdout_score
             keeps += 1
 
+    canonical = canonical_evaluate(current)
     receipt = {
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "variant": args.variant,
@@ -137,6 +143,8 @@ def main() -> int:
         "objective_train": round(current_score, 8),
         "objective_holdout": round(current_holdout, 8),
         "initial_holdout_objective": round(baseline_holdout, 8),
+        "canonical_holdout": metrics_dict(canonical),
+        "canonical_holdout_fitness": round(canonical.fitness, 8),
         "trials": rows,
     }
 
@@ -150,9 +158,14 @@ def main() -> int:
 
         champion_path = STATE_DIR / "champion.json"
         old_score = float("-inf")
+        old_basis = float("inf")
         if champion_path.exists():
-            old_score = json.loads(champion_path.read_text()).get("objective_holdout", old_score)
-        if current_holdout > old_score:
+            old = json.loads(champion_path.read_text())
+            old_score = old.get("canonical_holdout_fitness", old_score)
+            old_basis = old.get("canonical_holdout", {}).get("active_basis", old_basis)
+        better = canonical.fitness > old_score + 1e-9
+        tie_but_smaller = abs(canonical.fitness - old_score) <= 1e-9 and canonical.active_basis < old_basis - 1e-9
+        if better or tie_but_smaller:
             champion_path.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
 
     return 0
