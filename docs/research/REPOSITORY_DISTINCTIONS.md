@@ -79,5 +79,74 @@ consumed/retained work; transient answer/reusable artifact; trace/pattern; patte
 
 Central test: did this work only solve the current problem, or reduce expected cost for a class of future problems?
 
-## Highest-leverage reconstruction basis
-canonical/derived; fact/inference; claim/evidence; specification/implementation; proposal/accepted; simulation/execution; passing/correct; current/superseded; source/generated; persistent/ephemeral; reversible/irreversible; generator/verifier; search/promotion; task result/reusable capability; accumulation/compounding; resolved/residual; authority/capability; identity/representation; local/shared state; current problem/future-work reduction.
+## 26 Minimum repository topology
+
+The conceptual topology is:
+
+```text
+repo/
+├── README.md
+├── AGENTS.md
+├── CONTRIBUTING.md
+├── PROJECT_INTENT.md
+├── control/              # authority, policy, source-of-truth manifest
+├── docs/
+│   ├── architecture/     # structure and contracts
+│   ├── decisions/        # ADRs and supersession
+│   ├── specs/            # normative requirements
+│   └── research/         # findings, hypotheses, negative results
+├── src/                  # canonical implementation
+├── sim/                  # trusted evaluator/simulation substrate
+├── tests/                # executable verification
+├── tools/                # reusable mechanisms
+├── scripts/              # operational procedures
+├── data/
+│   ├── canonical/        # authoritative datasets
+│   ├── raw/              # provenance-preserving inputs
+│   └── derived/          # reproducible transformations
+├── experiments/          # noncanonical search
+├── benchmarks/           # measurement
+├── fixtures/             # controlled test inputs
+├── state/
+│   ├── backlog/          # possible work
+│   ├── active/           # selected work
+│   ├── residuals/        # unresolved distinctions/questions
+│   └── completed/        # completion receipts
+├── knowledge/
+│   ├── findings/         # retained discoveries
+│   ├── failures/         # negative knowledge
+│   ├── patterns/         # repeated structures
+│   ├── abstractions/     # promoted reusable knowledge
+│   └── archive/          # superseded/dormant learning
+├── vendor/               # pinned external lineages, not project intent
+└── artifacts/            # reproducible outputs, derived by default
+```
+
+This is conceptual, not an instruction to move stable existing files for cosmetic consistency. Migration must preserve behavior, provenance, and authority.
+
+## 27 Highest-leverage meta-distinctions
+
+If the rest must be reconstructed, preserve these:
+
+1. canonical / derived
+2. fact / inference
+3. claim / evidence
+4. specification / implementation
+5. proposal / accepted state
+6. simulation / execution
+7. passing / correct
+8. current / superseded
+9. source / generated
+10. persistent / ephemeral
+11. reversible / irreversible
+12. generator / verifier
+13. search / promotion
+14. task result / reusable capability
+15. accumulation / compounding
+16. resolved / residual
+17. authority / capability
+18. identity / representation
+19. local state / shared state
+20. current problem / future-work reduction
+
+A mature repository preserves these boundaries strongly enough that a fresh human or agent can reconstruct what is true, authoritative, observed, proposed, accepted, unresolved, reversible, and safe to do next.
