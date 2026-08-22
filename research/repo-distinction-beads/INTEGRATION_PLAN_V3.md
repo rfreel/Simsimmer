@@ -34,10 +34,11 @@ Gate A: a bead can answer what it is about, what blocks it, who may close it, an
 
 ### B. Preserve migration compatibility
 
-1. Translate every current `depends_on` edge to `BLOCKS` initially; do not infer weaker relation types automatically.
-2. Reclassify edges only with explicit evidence.
-3. Keep legacy `depends_on` generated from current blocking relations until all consumers use typed relations.
-4. Verify ready-set equivalence before and after migration.
+1. Translate each legacy `A.depends_on=[B]` relation to `A WAITS_FOR B`; the derived blocking projection therefore treats B as blocking A.
+2. Do not infer hierarchy, causation, duplication, or weaker descriptive relations from legacy dependency syntax.
+3. Reclassify relation semantics only with explicit evidence.
+4. Keep legacy `depends_on` generated from current readiness-affecting relations until all consumers use typed relations.
+5. Verify ready-set equivalence before and after migration.
 
 Gate B: migration changes representation, not the current legal execution set.
 
@@ -122,6 +123,25 @@ Create a new bead only if the work cannot be closed independently inside those e
 | retries preserve history | append-only attempt lineage fixture |
 | claims do not become ownership | lease expiry/stale-claim fixture |
 | rich context is non-normative by default | proposed mechanism can change without requirement failure |
+
+## Executed migration probe
+
+A noncanonical v3 projection was generated from the validated v2 bead graph to test the representation before promotion.
+
+Observed probe result:
+
+- beads: 106 -> 106
+- legacy dependency edges: 159
+- typed relation instances: 159 `WAITS_FOR`
+- missing relation targets: 0
+- legacy ready set: `[RG-P0-01]`
+- typed ready set: `[RG-P0-01]`
+- ready-set equivalence: PASS
+- DAG acyclic: PASS
+- unit critical path: 35 -> 35
+- subject root: intentionally `UNBOUND`
+
+The projection remains noncanonical until `RG-P0-01` binds the actual subject root and closure-authority classifications are reviewed.
 
 ## Stopping rule
 
