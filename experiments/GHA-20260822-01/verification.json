@@ -1,6 +1,6 @@
 {
   "task_id": "GHA-20260822-01",
-  "status": "partial",
+  "status": "verified",
   "root_sha": "4c737538fd68780d8e750fc6d5b1b71429c13690",
   "verified": {
     "action_releases": [
@@ -18,29 +18,43 @@
     "branch_sync_simulation": {
       "ratchet_behind_main": "pass",
       "ratchet_state_ahead_main_code_ahead": "pass",
-      "ratchet_non_state_drift": "rejected_before repository code",
-      "conflicting_state_edits": "failed closed"
+      "ratchet_non_state_drift": "rejected_before_repository_code",
+      "conflicting_state_edits": "failed_closed"
     },
-    "static_checks": {
-      "doctor_python_ast": "pass",
-      "ci_yaml_parse": "pass",
-      "autoresearch_yaml_parse": "pass",
-      "external_action_refs_full_sha": "pass"
+    "hosted_runner_recovery": {
+      "prior_signature": "failure_before_step_1; steps=[]; BlobNotFound",
+      "recovery_observed_run": 32588512441,
+      "recovery_observed_job": 97072601554,
+      "runner_started": true,
+      "exact_setting_cause_isolated": false
+    },
+    "repository_repairs": {
+      "missing_contracts_added": [
+        "docs/architecture/FLYWHEEL.md",
+        "docs/specs/EXPERIMENT_CONTRACT.md"
+      ],
+      "evaluator_lock_repair_task": "EVAL-LOCK-20260822-01",
+      "simulator_or_tests_modified_for_lock_repair": false
+    },
+    "final_ci": {
+      "run_id": 32590505520,
+      "job_id": 97073492962,
+      "conclusion": "success",
+      "steps": {
+        "checkout": "success",
+        "setup_python": "success",
+        "repository_doctor": "success",
+        "simulator_tests": "success",
+        "specification_basis_contract_tests": "success",
+        "autoresearch_smoke": "success",
+        "specification_scheduler_smoke": "success",
+        "flywheel_architecture_simulation_replay": "success",
+        "dependency_atomic_bead_graph_verification": "success"
+      }
     }
   },
-  "hosted_runner": {
-    "source_run_id": 32582992482,
-    "fresh_rerun_requested": true,
-    "fresh_job_id": 97058256361,
-    "result": "failure_before_step_1",
-    "steps": [],
-    "logs": "BlobNotFound",
-    "classification": "infrastructure-inconclusive; no repository command executed"
-  },
-  "not_verified": [
-    "scripts/doctor.py executed inside the complete repository checkout",
-    "full Simsimmer test suite on the changed branch",
-    "GitHub-hosted execution of the changed workflows"
+  "residuals": [
+    "the exact individual repository Actions setting that restored hosted-runner allocation was not independently isolated"
   ],
-  "promotion_note": "Do not interpret the zero-step hosted-runner result as a candidate/test failure. A full pass requires a hosted job that exposes and executes normal steps."
+  "promotion_note": "Final production-shaped hosted CI passed after temporary diagnostic steps and trigger files were removed."
 }
