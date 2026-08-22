@@ -40,6 +40,8 @@ jobs:
           echo "==============================="
       - name: Repository distinction doctor
         run: python scripts/doctor.py
+      - name: Autoresearch subprocess preflight
+        run: python autoresearch.py --variant exploit --iterations 3 --seed 42 > /tmp/autoresearch-preflight.json
       - name: Simulator tests
         run: python -m unittest discover -s tests -v
       - name: Specification basis contract tests
