@@ -1,31 +1,58 @@
 name: scheduled-autoresearch
+
 on:
   workflow_dispatch:
   schedule:
     # Twice daily. Odd minute reduces shared-runner cron contention.
     - cron: '17 1,13 * * *'
+
 permissions:
   contents: write
+
 concurrency:
   group: simsimmer-autoresearch-ratchet
   cancel-in-progress: false
+
 jobs:
   research:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Checkout contained ratchet lane
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: autoresearch/ratchet
           fetch-depth: 0
-      - name: Sync reviewed code from main
+
+      - name: Validate ratchet lane and sync reviewed main
+        shell: bash
         run: |
-          git fetch origin main
+          set -euo pipefail
+          git config user.name "simsimmer-autoresearch"
+          git config user.email "simsimmer-autoresearch@users.noreply.github.com"
+          git fetch --no-tags origin main:refs/remotes/origin/main
+
+          merge_base="$(git merge-base HEAD origin/main)"
+          mapfile -d '' -t ratchet_paths < <(git diff --name-only -z "$merge_base" HEAD)
+          for path in "${ratchet_paths[@]}"; do
+            case "$path" in
+              state/*) ;;
+              *) echo "ERROR: ratchet lane contains non-state divergence: $path" >&2; exit 1 ;;
+            esac
+          done
+
           git merge --no-edit origin/main
-      - uses: actions/setup-python@v5
+          echo "SIMSIMMER_SYNC_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "Synchronized root: $(git rev-parse HEAD)"
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
-      - run: python -m unittest discover -s tests -v
+
+      - name: Verify before research
+        run: python -m unittest discover -s tests -v
+
       - name: Explore
         run: python autoresearch.py --variant explore --iterations 24 --seed ${{ github.run_id }} --write
       - name: Exploit
@@ -34,12 +61,20 @@ jobs:
         run: python autoresearch.py --variant transfer --iterations 24 --seed $(( ${{ github.run_id }} + 2 )) --write
       - name: Compress
         run: python autoresearch.py --variant compress --iterations 24 --seed $(( ${{ github.run_id }} + 3 )) --write
+
       - name: Verify after research
         run: python -m unittest discover -s tests -v
+
       - name: Enforce autoresearch write boundary
         shell: bash
         run: |
-          mapfile -t changed < <(git status --porcelain=v1 | sed -E 's/^.. //' | sort -u)
+          set -euo pipefail
+          if [[ "$(git rev-parse HEAD)" != "$SIMSIMMER_SYNC_SHA" ]]; then
+            echo "ERROR: autoresearch created or moved commits before persistence" >&2
+            exit 1
+          fi
+
+          mapfile -d '' -t changed < <({ git diff --name-only -z HEAD; git ls-files --others --exclude-standard -z; } | sort -zu)
           printf '%s\n' "${changed[@]}"
           for path in "${changed[@]}"; do
             case "$path" in
@@ -47,14 +82,25 @@ jobs:
               *) echo "ERROR: autoresearch escaped state/ write boundary: $path" >&2; exit 1 ;;
             esac
           done
+
       - name: Persist ratchet state only
+        shell: bash
         run: |
-          git config user.name "simsimmer-autoresearch"
-          git config user.email "simsimmer-autoresearch@users.noreply.github.com"
+          set -euo pipefail
           git add state/
           if git diff --cached --quiet; then
-            echo "No state delta"
+            echo "No new state delta"
           else
             git commit -m "autoresearch: scheduled simulator batch"
-            git push origin HEAD:autoresearch/ratchet
           fi
+
+          merge_base="$(git merge-base HEAD origin/main)"
+          mapfile -d '' -t persisted_paths < <(git diff --name-only -z "$merge_base" HEAD)
+          for path in "${persisted_paths[@]}"; do
+            case "$path" in
+              state/*) ;;
+              *) echo "ERROR: ratchet persistence contains non-state path: $path" >&2; exit 1 ;;
+            esac
+          done
+
+          git push origin HEAD:autoresearch/ratchet
