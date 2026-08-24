@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "repo-distinction-beads/bead-contract-v3",
+  "title": "Repository distinction bead contract v3",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "kind",
+    "phase",
+    "subject_root",
+    "outcome_contract",
+    "acceptance",
+    "acceptance_authority",
+    "work_state",
+    "evidence_state",
+    "promotion_state",
+    "relations",
+    "close_receipt"
+  ],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "kind": {"type": "string", "minLength": 1},
+    "phase": {"type": "string", "pattern": "^P[0-9]+$"},
+    "subject_root": {
+      "type": "object",
+      "required": ["host_repo", "subject", "revision_or_hash"],
+      "properties": {
+        "host_repo": {"type": "string"},
+        "subject": {"type": "string"},
+        "revision_or_hash": {"type": "string"},
+        "included_paths": {"type": "array", "items": {"type": "string"}},
+        "excluded_paths": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "source_requirements": {"type": "array", "items": {"type": "string"}},
+    "outcome_contract": {"type": "string", "minLength": 1},
+    "context": {"type": "string"},
+    "proposed_mechanisms": {"type": "array", "items": {"type": "string"}},
+    "acceptance": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "acceptance_authority": {
+      "type": "object",
+      "required": ["mode"],
+      "properties": {
+        "mode": {"enum": ["oracle", "review_witness", "mixed", "unresolved"]},
+        "oracle_ref": {"type": "string"},
+        "review_role": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "work_state": {
+      "enum": ["blocked", "runnable", "claimed", "executing", "executed", "deferred", "closed", "tombstoned"]
+    },
+    "evidence_state": {
+      "enum": ["not_evaluated", "awaiting_evidence", "fail", "needs_review", "unresolved", "verified"]
+    },
+    "promotion_state": {
+      "enum": ["not_promotable", "promotable", "promoted", "superseded", "rejected"]
+    },
+    "priority": {"type": "integer", "minimum": 0, "maximum": 4},
+    "estimate": {
+      "type": "object",
+      "properties": {
+        "minutes": {"type": "number", "minimum": 0},
+        "uncertainty": {"type": "number", "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": false
+    },
+    "claim": {
+      "type": ["object", "null"],
+      "properties": {
+        "actor": {"type": "string"},
+        "session": {"type": "string"},
+        "claimed_at": {"type": "string"},
+        "lease_until": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "target"],
+        "properties": {
+          "type": {
+            "enum": [
+              "BLOCKS",
+              "WAITS_FOR",
+              "CONDITIONAL_BLOCKS",
+              "PARENT_OF",
+              "RELATED_TO",
+              "DISCOVERED_FROM",
+              "CAUSED_BY",
+              "DUPLICATES",
+              "SUPERSEDES"
+            ]
+          },
+          "target": {"type": "string"},
+          "condition": {"type": "string"},
+          "assertion": {"enum": ["asserted", "inferred"]},
+          "provenance": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "depends_on": {
+      "description": "Compatibility projection generated from currently blocking relations; not canonical in v3.",
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "attempts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["attempt_id", "outcome"],
+        "properties": {
+          "attempt_id": {"type": "string"},
+          "parent_attempt": {"type": ["string", "null"]},
+          "actor": {"type": "string"},
+          "outcome": {"enum": ["pass", "fail", "needs_review", "unresolved", "aborted"]},
+          "evidence_ref": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "close_reason": {"type": "string"},
+    "close_receipt": {"type": "string", "minLength": 1},
+    "residuals": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {
+    "blocking_relation_types": {
+      "const": ["BLOCKS", "WAITS_FOR", "CONDITIONAL_BLOCKS"]
+    }
+  },
+  "additionalProperties": true
+}
