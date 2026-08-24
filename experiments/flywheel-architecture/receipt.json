@@ -1,0 +1,17 @@
+{
+  "bootstrap": {
+    "configuration": {"coordination":"hybrid","lifecycle":"none","memory":"hybrid","qa":"hybrid","remote_execution":"none","routing":"hybrid","security":"none","spec_basis":"hybrid","task_graph":"hybrid","trace_compiler":"hybrid"},
+    "score": 41.2
+  },
+  "bootstrap_active_role_cap": 7,
+  "classification": "synthetic architecture evidence",
+  "limits": ["finite declared topology only","hand-authored score model","requires downstream empirical validation"],
+  "long_term": {
+    "configuration": {"coordination":"hybrid","lifecycle":"hybrid","memory":"hybrid","qa":"hybrid","remote_execution":"hybrid","routing":"hybrid","security":"hybrid","spec_basis":"hybrid","task_graph":"hybrid","trace_compiler":"hybrid"},
+    "score": 82.39999999999999
+  },
+  "receipt_sha256": "212e8df4b2cc45bf54eaed35c5fc59b59362ed470624d9843efd94a8dc2cac1d",
+  "required_from_bootstrap": ["spec_basis","trace_compiler"],
+  "schema": "simsimmer/flywheel-architecture-sim-v2",
+  "space_size": 1048576
+}

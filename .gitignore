@@ -2,3 +2,9 @@ __pycache__/
 *.pyc
 .venv/
 run-*.json
+traces/raw/**
+generated/tmp/**
+artifacts/tmp/**
+!traces/raw/.gitkeep
+!generated/tmp/.gitkeep
+!artifacts/tmp/.gitkeep

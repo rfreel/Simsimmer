@@ -1,0 +1,45 @@
+{
+  "schema": "simsimmer/repository-manifest-v1",
+  "project": {
+    "repository": "rfreel/Simsimmer",
+    "mission_file": "PROJECT_INTENT.md",
+    "agent_contract": "AGENTS.md",
+    "simulate_before_generate": true
+  },
+  "canonical": [
+    "PROJECT_INTENT.md",
+    "AGENTS.md",
+    "control/**",
+    "src/**",
+    "sim/**",
+    "tests/**",
+    "tools/**",
+    "scripts/**",
+    "state/**",
+    "knowledge/**"
+  ],
+  "derived": ["generated/**", "artifacts/**", "traces/raw/**"],
+  "protected": ["sim/**", "tests/**", "evaluator.lock.json", "control/**"],
+  "write_lanes": {
+    "main": "promoted/reviewed state only",
+    "autoresearch/ratchet": "state/** only",
+    "agent/*": "task-scoped write zones",
+    "exp/*": "experiment-scoped generated candidates"
+  },
+  "external_references": {
+    "immutable_context_sim_v1_1": {
+      "source_sha256": "56fdde409c72a293e67929e3e9637a3cb578fbbc5970486ed2b8384d07e13648",
+      "status": "library-verified-lineage"
+    },
+    "doodlestein_acfs": {
+      "repository": "Dicklesworthstone/agentic_coding_flywheel_setup",
+      "commit": "6c9e68a918375e4717d452fc643480c3110a232d",
+      "role": "structural reference only"
+    }
+  },
+  "required_experiment_fields": [
+    "experiment_id", "root_sha", "problem", "objective", "scope",
+    "success_criteria", "stopping_rule", "budget", "candidate_space",
+    "generator", "evaluator", "verifiers", "seed", "status"
+  ]
+}

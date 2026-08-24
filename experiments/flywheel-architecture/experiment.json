@@ -1,0 +1,18 @@
+{
+  "experiment_id": "flywheel-architecture-v1",
+  "root_sha": "a95650986f7b3a0511a387545dba547e9c673b1b",
+  "kind": "research",
+  "problem": "choose long-term Simsimmer repository flywheel roles and native/external boundaries",
+  "objective": "maximize compounding capability while preserving canonical authority, containment, verification, and low bootstrap complexity",
+  "scope": {"in": ["repository architecture","agent/tool roles","external adapters","specification basis"], "out": ["application feature implementation","deployment"]},
+  "success_criteria": ["exhaust declared finite architecture space","preserve stateful canonical repository authority","produce bootstrap and long-term configurations"],
+  "stopping_rule": {"kind": "exhaustive finite space"},
+  "budget": {"configurations": 1048576},
+  "candidate_space": {"roles": 10, "modes_per_role": 4},
+  "generator": {"kind": "cartesian enumeration"},
+  "evaluator": {"kind": "fixed synthetic architecture score", "script": "tools/simulate_flywheel_architecture.py"},
+  "verifiers": ["scripts/doctor.py","human/agent architectural review"],
+  "holdout": {"kind": "not applicable to exhaustive synthetic topology search; downstream empirical validation required"},
+  "seed": 0,
+  "status": "complete"
+}

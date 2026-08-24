@@ -1,0 +1,21 @@
+{
+  "schema": "simsimmer/external-references-v1",
+  "references": [
+    {
+      "id": "icsim-v1.1.0",
+      "kind": "library-artifact",
+      "name": "immutable-context-sim-v1.1.0-tools-source.zip",
+      "sha256": "56fdde409c72a293e67929e3e9637a3cb578fbbc5970486ed2b8384d07e13648",
+      "authority": "imported verified lineage; not project intent",
+      "mutable": false
+    },
+    {
+      "id": "doodlestein-acfs",
+      "kind": "git-reference",
+      "repository": "Dicklesworthstone/agentic_coding_flywheel_setup",
+      "commit": "6c9e68a918375e4717d452fc643480c3110a232d",
+      "authority": "advisory structural reference",
+      "mutable": false
+    }
+  ]
+}

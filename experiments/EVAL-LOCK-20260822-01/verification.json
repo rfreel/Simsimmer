@@ -1,0 +1,24 @@
+{
+  "task_id": "EVAL-LOCK-20260822-01",
+  "status": "verified",
+  "simulator_blob_sha": "48cbb26065c97b472b2f133950f69394b3132d50",
+  "old_lock_sha256": "e23846f6009be0623b76442afaa03cccd509d106f6c3bbf3467e73486aff349c",
+  "runner_observed_sha256": "be6a39b09e522778c00ffa4d14258140f897110f9eb9cef53bbd198a960c9320",
+  "simulator_changed": false,
+  "tests_changed": false,
+  "github_actions": {
+    "run_id": 32590373854,
+    "job_id": 97073151783,
+    "conclusion": "success",
+    "checks": {
+      "repository_doctor": "success",
+      "autoresearch_subprocess_preflight": "success",
+      "simulator_tests": "success",
+      "specification_basis_contract_tests": "success",
+      "autoresearch_smoke": "success",
+      "specification_scheduler_smoke": "success",
+      "flywheel_architecture_simulation_replay": "success",
+      "dependency_atomic_bead_graph_verification": "success"
+    }
+  }
+}

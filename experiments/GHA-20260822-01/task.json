@@ -1,0 +1,48 @@
+{
+  "id": "GHA-20260822-01",
+  "owner": "coordinator",
+  "branch": "agent/github-actions-hardening",
+  "root_sha": "4c737538fd68780d8e750fc6d5b1b71429c13690",
+  "pull_request": 6,
+  "write_paths": [
+    ".github/workflows/ci.yml",
+    ".github/workflows/autoresearch.yml",
+    ".github/dependabot.yml",
+    "scripts/doctor.py",
+    "docs/architecture/FLYWHEEL.md",
+    "docs/specs/EXPERIMENT_CONTRACT.md",
+    "experiments/GHA-20260822-01/**"
+  ],
+  "read_dependencies": [
+    "PROJECT_INTENT.md",
+    "AGENTS.md",
+    "docs/OWNERSHIP.md",
+    "control/repository.manifest.json",
+    "GitHub Actions secure-use guidance",
+    "GitHub Actions runtime/release metadata"
+  ],
+  "status": "verified",
+  "problem": "Harden Simsimmer GitHub Actions and repair the scheduled ratchet synchronization boundary while distinguishing GitHub-hosted runner infrastructure failures from repository-controlled failures.",
+  "success_criteria": [
+    "external actions use current Node 24-compatible releases pinned to full commit SHAs",
+    "the ratchet lane is checked for state-only divergence before repository code executes",
+    "main/ratchet divergence synchronizes without history rewriting and fails closed on conflicts",
+    "autoresearch cannot silently create commits or persist non-state changes",
+    "CI enforces the action-pinning and containment contract",
+    "hosted-runner failures remain distinct from repository test failures",
+    "production-shaped hosted CI executes all repository gates successfully"
+  ],
+  "verification": [
+    "branch-history simulation passed expected behavior for behind-only sync, state/code divergence, non-state drift rejection, and state-conflict fail-closed",
+    "changed Python AST and workflow YAML syntax checks passed",
+    "zero-step hosted-runner failure was repeatedly reproduced before repository code executed",
+    "after repository Actions settings were changed, hosted runner execution resumed and exposed repository-controlled failures",
+    "missing repository contracts required by doctor.py were added without weakening doctor.py",
+    "a separately scoped evaluator-lock repair was independently verified without modifying sim/simulator.py or tests",
+    "final production-shaped CI run 32590505520 completed successfully with every normal gate passing"
+  ],
+  "rollback_point": "4c737538fd68780d8e750fc6d5b1b71429c13690",
+  "residuals": [
+    "the exact individual repository Actions setting responsible for the earlier zero-step runner-allocation failure was not independently isolated"
+  ]
+}

@@ -1,16 +1,43 @@
 name: ci
+
 on:
   push:
+    branches: [main]
   pull_request:
+  workflow_dispatch:
+
 permissions:
   contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
-      - run: python -m unittest discover -s tests -v
-      - run: python autoresearch.py --variant exploit --iterations 3 --seed 42
+      - name: Repository distinction doctor
+        run: python scripts/doctor.py
+      - name: Simulator tests
+        run: python -m unittest discover -s tests -v
+      - name: Specification basis contract tests
+        run: python decompose-task-space/spec/tests/test_spec_basis.py -v
+      - name: Autoresearch smoke
+        run: python autoresearch.py --variant exploit --iterations 3 --seed 42
+      - name: Specification scheduler smoke
+        run: python decompose-task-space/spec/simulate_spec_basis.py --limit 16 > /tmp/spec-probes.json
+      - name: Flywheel architecture simulation replay
+        run: python tools/simulate_flywheel_architecture.py --out /tmp/flywheel-receipt.json
+      - name: Dependency-atomic bead graph verification
+        run: python experiments/decomposition-policy/verify_decomposition_beads.py

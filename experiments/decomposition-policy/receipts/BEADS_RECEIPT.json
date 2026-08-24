@@ -1,0 +1,24 @@
+{
+  "bead_count": 106,
+  "critical_path_unit_beads": 57,
+  "dag_acyclic": true,
+  "global_gate_count": 10,
+  "initial_frontier": [
+    "RG-P0-01"
+  ],
+  "jsonl_sha256": "326e4a72c98647cde55aaba877c8d654be96cdfe402b52c4718aea51f512aaed",
+  "phase_counts": {
+    "P0": 10,
+    "P1": 14,
+    "P2": 15,
+    "P3": 15,
+    "P4": 15,
+    "P5": 7,
+    "P6": 11,
+    "P7": 10,
+    "P8": 9
+  },
+  "schema": "repo-distinction/beads-decomposition-receipt-v1",
+  "strategy": "dependency_atomic",
+  "todo_sha256": "f0e657253ed7ebe6ddbe9e370dd0085e6410696bb1157c6c6f91123832773222"
+}

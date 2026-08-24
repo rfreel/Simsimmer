@@ -1,0 +1,5 @@
+{
+  "schema": "simsimmer/spec-residuals-v1",
+  "residuals": [],
+  "rule": "unresolved specialized concepts remain residuals until the extension protocol admits collapse, composition, or primitive promotion"
+}

@@ -1,0 +1,46 @@
+{
+  "aggregate_rank": [
+    {"mean_rank": 1.0, "strategy": "dependency_atomic", "task_count": 106, "wins": 5, "worst_rank": 1},
+    {"mean_rank": 2.0, "strategy": "lifecycle_split", "task_count": 124, "wins": 0, "worst_rank": 2},
+    {"mean_rank": 3.0, "strategy": "clause_micro_split", "task_count": 172, "wins": 0, "worst_rank": 3},
+    {"mean_rank": 4.0, "strategy": "literal_checklist", "task_count": 118, "wins": 0, "worst_rank": 4},
+    {"mean_rank": 5.0, "strategy": "vertical_slices", "task_count": 16, "wins": 0, "worst_rank": 5},
+    {"mean_rank": 6.0, "strategy": "phase_chunks", "task_count": 9, "wins": 0, "worst_rank": 6}
+  ],
+  "best_separating_observable": {"name": "task_count", "separated_pairs": 15},
+  "invariant_treatment": "global invariants become acceptance gates, not standalone work beads, in lifecycle/dependency-atomic strategies",
+  "limitations": [
+    "Scores are an explicit planning model, not empirical task-duration measurements.",
+    "Text-derived complexity features are heuristic.",
+    "Simulation chooses task shape; it does not prove implementation correctness."
+  ],
+  "metrics": {
+    "clause_micro_split": {"atomicity": 0.96, "avg_scope": 0.6, "dependency_clarity": 0.5, "explicit_acceptance": 0.58, "hidden_decisions": 4, "invariant_gate_coverage": 0.55, "mixed_mutation_verification": 0, "overhead": 163.4, "parallelism": 0.74, "rework": 13.4, "task_count": 172},
+    "dependency_atomic": {"atomicity": 0.95, "avg_scope": 0.9, "dependency_clarity": 0.94, "explicit_acceptance": 0.93, "hidden_decisions": 0, "invariant_gate_coverage": 1.0, "mixed_mutation_verification": 0, "overhead": 59.36, "parallelism": 0.79, "rework": 2.0, "task_count": 106},
+    "lifecycle_split": {"atomicity": 0.91, "avg_scope": 0.85, "dependency_clarity": 0.78, "explicit_acceptance": 0.82, "hidden_decisions": 0, "invariant_gate_coverage": 1.0, "mixed_mutation_verification": 0, "overhead": 84.32, "parallelism": 0.66, "rework": 5, "task_count": 124},
+    "literal_checklist": {"atomicity": 0.9685185185185186, "avg_scope": 1, "dependency_clarity": 0.42, "explicit_acceptance": 0.48, "hidden_decisions": 8, "invariant_gate_coverage": 0.35, "mixed_mutation_verification": 8, "overhead": 64.9, "parallelism": 0.55, "rework": 11.6, "task_count": 118},
+    "phase_chunks": {"atomicity": 0.14285714285714285, "avg_scope": 12.0, "dependency_clarity": 0.55, "explicit_acceptance": 0.35, "hidden_decisions": 8, "invariant_gate_coverage": 0.35, "mixed_mutation_verification": 7, "overhead": 3.15, "parallelism": 0.35, "rework": 26.4, "task_count": 9},
+    "vertical_slices": {"atomicity": 0.28, "avg_scope": 6.75, "dependency_clarity": 0.62, "explicit_acceptance": 0.64, "hidden_decisions": 8, "invariant_gate_coverage": 0.35, "mixed_mutation_verification": 11, "overhead": 7.2, "parallelism": 0.4, "rework": 19.8, "task_count": 16}
+  },
+  "mode": "same-root speculative decomposition policy comparison; no canonical mutation committed",
+  "rankings": {
+    "balanced": ["dependency_atomic", "lifecycle_split", "clause_micro_split", "literal_checklist", "vertical_slices", "phase_chunks"],
+    "correctness_first": ["dependency_atomic", "lifecycle_split", "clause_micro_split", "literal_checklist", "vertical_slices", "phase_chunks"],
+    "low_coordination": ["dependency_atomic", "lifecycle_split", "clause_micro_split", "literal_checklist", "vertical_slices", "phase_chunks"],
+    "low_rework": ["dependency_atomic", "lifecycle_split", "clause_micro_split", "literal_checklist", "vertical_slices", "phase_chunks"],
+    "parallel_agents": ["dependency_atomic", "lifecycle_split", "clause_micro_split", "literal_checklist", "vertical_slices", "phase_chunks"]
+  },
+  "results": {
+    "clause_micro_split": {"metrics": {"atomicity": 0.96, "avg_scope": 0.6, "dependency_clarity": 0.5, "explicit_acceptance": 0.58, "hidden_decisions": 4, "invariant_gate_coverage": 0.55, "mixed_mutation_verification": 0, "overhead": 163.4, "parallelism": 0.74, "rework": 13.4, "task_count": 172}, "scores": {"balanced": 268.888, "correctness_first": 291.792, "low_coordination": 165.81, "low_rework": 181.788, "parallel_agents": 308.72}},
+    "dependency_atomic": {"metrics": {"atomicity": 0.95, "avg_scope": 0.9, "dependency_clarity": 0.94, "explicit_acceptance": 0.93, "hidden_decisions": 0, "invariant_gate_coverage": 1.0, "mixed_mutation_verification": 0, "overhead": 59.36, "parallelism": 0.79, "rework": 2.0, "task_count": 106}, "scores": {"balanced": 541.0152, "correctness_first": 624.5768, "low_coordination": 499.124, "low_rework": 533.0152, "parallel_agents": 592.928}},
+    "lifecycle_split": {"metrics": {"atomicity": 0.91, "avg_scope": 0.85, "dependency_clarity": 0.78, "explicit_acceptance": 0.82, "hidden_decisions": 0, "invariant_gate_coverage": 1.0, "mixed_mutation_verification": 0, "overhead": 84.32, "parallelism": 0.66, "rework": 5, "task_count": 124}, "scores": {"balanced": 460.4224, "correctness_first": 536.5816, "low_coordination": 406.388, "low_rework": 433.6224, "parallel_agents": 499.336}},
+    "literal_checklist": {"metrics": {"atomicity": 0.9685185185185186, "avg_scope": 1, "dependency_clarity": 0.42, "explicit_acceptance": 0.48, "hidden_decisions": 8, "invariant_gate_coverage": 0.35, "mixed_mutation_verification": 8, "overhead": 64.9, "parallelism": 0.55, "rework": 11.6, "task_count": 118}, "scores": {"balanced": 208.7958, "correctness_first": 203.0601, "low_coordination": 145.0924, "low_rework": 129.9106, "parallel_agents": 243.8978}},
+    "phase_chunks": {"metrics": {"atomicity": 0.14285714285714285, "avg_scope": 12.0, "dependency_clarity": 0.55, "explicit_acceptance": 0.35, "hidden_decisions": 8, "invariant_gate_coverage": 0.35, "mixed_mutation_verification": 7, "overhead": 3.15, "parallelism": 0.35, "rework": 26.4, "task_count": 9}, "scores": {"balanced": -13.2384, "correctness_first": -64.2923, "low_coordination": -82.0311, "low_rework": -154.767, "parallel_agents": 5.0986}},
+    "vertical_slices": {"metrics": {"atomicity": 0.28, "avg_scope": 6.75, "dependency_clarity": 0.62, "explicit_acceptance": 0.64, "hidden_decisions": 8, "invariant_gate_coverage": 0.35, "mixed_mutation_verification": 11, "overhead": 7.2, "parallelism": 0.4, "rework": 19.8, "task_count": 16}, "scores": {"balanced": 83.404, "correctness_first": 57.336, "low_coordination": 25.28, "low_rework": -24.296, "parallel_agents": 106.56}}
+  },
+  "schema": "repo-distinction/decomposition-sim-receipt-v1",
+  "simulator": "immutable-context-sim 1.1.0 Runtime",
+  "source": {"invariant_checkboxes": 10, "todo_path": "/mnt/data/repo-next-sim/output/TODO.md", "todo_sha256": "68d110b1f6a0266c128e2b8047eada8743132092229c3ada1d996b4acbdfe45a", "work_checkboxes": 108},
+  "strategies": ["phase_chunks", "literal_checklist", "clause_micro_split", "vertical_slices", "lifecycle_split", "dependency_atomic"],
+  "winner": "dependency_atomic"
+}
