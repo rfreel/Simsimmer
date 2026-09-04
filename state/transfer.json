@@ -1,33 +1,33 @@
 {
   "canonical_holdout": {
-    "active_basis": 0.30330069,
-    "compute_per_solve": 6.31981542,
-    "compute_per_task": 3.15839663,
-    "fitness": 43.72473744,
-    "rediscovery_rate": 0.00141243,
-    "reusable_yield": 0.4584433,
-    "solved_rate": 0.50130208,
-    "transfer_rate": 0.07689883,
-    "verification_precision": 0.9598059
+    "active_basis": 0.16351485,
+    "compute_per_solve": 5.96526281,
+    "compute_per_task": 3.15830201,
+    "fitness": 46.33964696,
+    "rediscovery_rate": 0.00128866,
+    "reusable_yield": 0.31122095,
+    "solved_rate": 0.52994792,
+    "transfer_rate": 0.06007188,
+    "verification_precision": 0.96393523
   },
-  "canonical_holdout_fitness": 43.72473744,
+  "canonical_holdout_fitness": 46.33964696,
   "evaluator_sha256": "be6a39b09e522778c00ffa4d14258140f897110f9eb9cef53bbd198a960c9320",
   "holdout": {
-    "active_basis": 0.22289438,
-    "compute_per_solve": 5.94341721,
-    "compute_per_task": 3.15798339,
-    "fitness": 47.07819508,
-    "rediscovery_rate": 0.0,
-    "reusable_yield": 0.31079449,
-    "solved_rate": 0.53359375,
-    "transfer_rate": 0.08380973,
-    "verification_precision": 0.95948066
+    "active_basis": 0.13491151,
+    "compute_per_solve": 5.98710354,
+    "compute_per_task": 3.15806597,
+    "fitness": 46.27084411,
+    "rediscovery_rate": 0.0013587,
+    "reusable_yield": 0.24260865,
+    "solved_rate": 0.52890625,
+    "transfer_rate": 0.06548183,
+    "verification_precision": 0.95732708
   },
   "initial_holdout_objective": 47.26394109,
   "iterations": 24,
-  "keeps": 1,
-  "objective_holdout": 48.33534106,
-  "objective_train": 49.2602001,
+  "keeps": 0,
+  "objective_holdout": 47.26394109,
+  "objective_train": 48.88884524,
   "policy": {
     "ablate_rate": 0.2,
     "active_basis_cap": 24,
@@ -39,237 +39,237 @@
     "search_breadth": 5,
     "search_depth": 4,
     "trace_rate": 0.55,
-    "transfer_weight": 0.44999999999999996,
+    "transfer_weight": 0.35,
     "verify_rate": 0.55
   },
-  "timestamp_utc": "2026-09-04T05:54:44.894922+00:00",
+  "timestamp_utc": "2026-09-04T16:52:50.976882+00:00",
   "train": {
-    "active_basis": 0.13327967,
-    "compute_per_solve": 5.82292819,
-    "compute_per_task": 3.158011,
-    "fitness": 48.05159422,
+    "active_basis": 0.12565858,
+    "compute_per_solve": 5.79546703,
+    "compute_per_task": 3.15763682,
+    "fitness": 47.97132545,
     "rediscovery_rate": 0.0,
-    "reusable_yield": 0.22860049,
-    "solved_rate": 0.54375,
-    "transfer_rate": 0.08057373,
-    "verification_precision": 0.96032149
+    "reusable_yield": 0.15302612,
+    "solved_rate": 0.54609375,
+    "transfer_rate": 0.06116799,
+    "verification_precision": 0.96375852
   },
   "trials": [
+    {
+      "holdout_delta": -1.04020403,
+      "holdout_score": 46.22373706,
+      "hypothesis": "trace_rate+0.1",
+      "iteration": 1,
+      "status": "REJECT",
+      "train_gain": -2.03476373,
+      "train_score": 46.85408151
+    },
+    {
+      "holdout_delta": -3.4744966,
+      "holdout_score": 43.78944449,
+      "hypothesis": "generalize_strength+0.1",
+      "iteration": 2,
+      "status": "REJECT",
+      "train_gain": -2.07057621,
+      "train_score": 46.81826903
+    },
+    {
+      "holdout_delta": -3.4744966,
+      "holdout_score": 43.78944449,
+      "hypothesis": "generalize_strength+0.1",
+      "iteration": 3,
+      "status": "REJECT",
+      "train_gain": -2.07057621,
+      "train_score": 46.81826903
+    },
+    {
+      "holdout_delta": -1.65472695,
+      "holdout_score": 45.60921413,
+      "hypothesis": "rediscover_weight+0.1",
+      "iteration": 4,
+      "status": "REJECT",
+      "train_gain": -1.11455548,
+      "train_score": 47.77428976
+    },
+    {
+      "holdout_delta": -1.13089745,
+      "holdout_score": 46.13304364,
+      "hypothesis": "ablate_rate+0.1",
+      "iteration": 5,
+      "status": "REJECT",
+      "train_gain": -3.48774322,
+      "train_score": 45.40110201
+    },
+    {
+      "holdout_delta": -0.08830368,
+      "holdout_score": 47.17563741,
+      "hypothesis": "trace_rate-0.1",
+      "iteration": 6,
+      "status": "REJECT",
+      "train_gain": -3.11337981,
+      "train_score": 45.77546543
+    },
+    {
+      "holdout_delta": -2.13775367,
+      "holdout_score": 45.12618742,
+      "hypothesis": "rediscover_weight-0.1",
+      "iteration": 7,
+      "status": "REJECT",
+      "train_gain": -3.02190425,
+      "train_score": 45.86694099
+    },
+    {
+      "holdout_delta": -1.13089745,
+      "holdout_score": 46.13304364,
+      "hypothesis": "ablate_rate+0.1",
+      "iteration": 8,
+      "status": "REJECT",
+      "train_gain": -3.48774322,
+      "train_score": 45.40110201
+    },
     {
       "holdout_delta": -2.13037583,
       "holdout_score": 45.13356526,
       "hypothesis": "compression_rate-0.1",
-      "iteration": 1,
+      "iteration": 9,
       "status": "REJECT",
       "train_gain": -1.23516752,
       "train_score": 47.65367772
     },
     {
-      "holdout_delta": 1.07139998,
-      "holdout_score": 48.33534106,
-      "hypothesis": "transfer_weight+0.1",
-      "iteration": 2,
-      "status": "KEEP",
-      "train_gain": 0.37135486,
-      "train_score": 49.2602001
-    },
-    {
-      "holdout_delta": -2.99884029,
-      "holdout_score": 45.33650077,
-      "hypothesis": "rediscover_weight-0.1",
-      "iteration": 3,
-      "status": "REJECT",
-      "train_gain": -3.22982898,
-      "train_score": 46.03037112
-    },
-    {
-      "holdout_delta": -3.74511802,
-      "holdout_score": 44.59022304,
-      "hypothesis": "reuse_threshold+1",
-      "iteration": 4,
-      "status": "REJECT",
-      "train_gain": -3.79785063,
-      "train_score": 45.46234946
-    },
-    {
-      "holdout_delta": -0.76001373,
-      "holdout_score": 47.57532734,
-      "hypothesis": "reuse_threshold-1",
-      "iteration": 5,
-      "status": "REJECT",
-      "train_gain": -2.36147564,
-      "train_score": 46.89872446
-    },
-    {
-      "holdout_delta": -2.99884029,
-      "holdout_score": 45.33650077,
-      "hypothesis": "rediscover_weight-0.1",
-      "iteration": 6,
-      "status": "REJECT",
-      "train_gain": -3.22982898,
-      "train_score": 46.03037112
-    },
-    {
-      "holdout_delta": -3.6266734,
-      "holdout_score": 44.70866767,
-      "hypothesis": "ablate_rate+0.1",
-      "iteration": 7,
-      "status": "REJECT",
-      "train_gain": -4.31469741,
-      "train_score": 44.94550269
-    },
-    {
-      "holdout_delta": -4.48252437,
-      "holdout_score": 43.8528167,
-      "hypothesis": "ablate_rate-0.1",
-      "iteration": 8,
-      "status": "REJECT",
-      "train_gain": -2.47989773,
-      "train_score": 46.78030237
-    },
-    {
-      "holdout_delta": -3.74511802,
-      "holdout_score": 44.59022304,
-      "hypothesis": "reuse_threshold+1",
-      "iteration": 9,
-      "status": "REJECT",
-      "train_gain": -3.79785063,
-      "train_score": 45.46234946
-    },
-    {
-      "holdout_delta": -4.48252437,
-      "holdout_score": 43.8528167,
-      "hypothesis": "ablate_rate-0.1",
+      "holdout_delta": -0.69222111,
+      "holdout_score": 46.57171997,
+      "hypothesis": "compression_rate+0.1",
       "iteration": 10,
       "status": "REJECT",
-      "train_gain": -2.47989773,
-      "train_score": 46.78030237
+      "train_gain": -2.87084939,
+      "train_score": 46.01799585
     },
     {
-      "holdout_delta": -3.6266734,
-      "holdout_score": 44.70866767,
-      "hypothesis": "ablate_rate+0.1",
+      "holdout_delta": -0.69222111,
+      "holdout_score": 46.57171997,
+      "hypothesis": "compression_rate+0.1",
       "iteration": 11,
       "status": "REJECT",
-      "train_gain": -4.31469741,
-      "train_score": 44.94550269
+      "train_gain": -2.87084939,
+      "train_score": 46.01799585
     },
     {
-      "holdout_delta": 0.72762129,
-      "holdout_score": 49.06296235,
-      "hypothesis": "trace_rate-0.1",
+      "holdout_delta": -1.18851171,
+      "holdout_score": 46.07542937,
+      "hypothesis": "transfer_weight-0.1",
       "iteration": 12,
       "status": "REJECT",
-      "train_gain": -4.94586777,
-      "train_score": 44.31433233
+      "train_gain": -4.59698485,
+      "train_score": 44.29186038
     },
     {
-      "holdout_delta": -1.76186234,
-      "holdout_score": 46.57347873,
-      "hypothesis": "rediscover_weight+0.1",
+      "holdout_delta": -0.69222111,
+      "holdout_score": 46.57171997,
+      "hypothesis": "compression_rate+0.1",
       "iteration": 13,
       "status": "REJECT",
-      "train_gain": -1.53732118,
-      "train_score": 47.72287891
+      "train_gain": -2.87084939,
+      "train_score": 46.01799585
     },
     {
-      "holdout_delta": -4.48252437,
-      "holdout_score": 43.8528167,
-      "hypothesis": "ablate_rate-0.1",
+      "holdout_delta": -2.34755981,
+      "holdout_score": 44.91638128,
+      "hypothesis": "reuse_threshold+1",
       "iteration": 14,
       "status": "REJECT",
-      "train_gain": -2.47989773,
-      "train_score": 46.78030237
+      "train_gain": 0.41667302,
+      "train_score": 49.30551825
     },
     {
-      "holdout_delta": -1.41200415,
-      "holdout_score": 46.92333692,
-      "hypothesis": "trace_rate+0.1",
+      "holdout_delta": -0.89244364,
+      "holdout_score": 46.37149745,
+      "hypothesis": "reuse_threshold-1",
       "iteration": 15,
       "status": "REJECT",
-      "train_gain": -3.80386515,
-      "train_score": 45.45633495
+      "train_gain": -1.1570776,
+      "train_score": 47.73176764
     },
     {
-      "holdout_delta": -1.07139998,
-      "holdout_score": 47.26394109,
-      "hypothesis": "transfer_weight-0.1",
+      "holdout_delta": -2.13037583,
+      "holdout_score": 45.13356526,
+      "hypothesis": "compression_rate-0.1",
       "iteration": 16,
       "status": "REJECT",
-      "train_gain": -0.37135486,
-      "train_score": 48.88884524
+      "train_gain": -1.23516752,
+      "train_score": 47.65367772
     },
     {
-      "holdout_delta": -2.99884029,
-      "holdout_score": 45.33650077,
-      "hypothesis": "rediscover_weight-0.1",
+      "holdout_delta": -1.65472695,
+      "holdout_score": 45.60921413,
+      "hypothesis": "rediscover_weight+0.1",
       "iteration": 17,
       "status": "REJECT",
-      "train_gain": -3.22982898,
-      "train_score": 46.03037112
+      "train_gain": -1.11455548,
+      "train_score": 47.77428976
     },
     {
-      "holdout_delta": -3.30453864,
-      "holdout_score": 45.03080242,
-      "hypothesis": "transfer_weight+0.1",
+      "holdout_delta": -0.89244364,
+      "holdout_score": 46.37149745,
+      "hypothesis": "reuse_threshold-1",
       "iteration": 18,
       "status": "REJECT",
-      "train_gain": -2.90210928,
-      "train_score": 46.35809082
+      "train_gain": -1.1570776,
+      "train_score": 47.73176764
     },
     {
-      "holdout_delta": -0.76001373,
-      "holdout_score": 47.57532734,
-      "hypothesis": "reuse_threshold-1",
+      "holdout_delta": -2.13037583,
+      "holdout_score": 45.13356526,
+      "hypothesis": "compression_rate-0.1",
       "iteration": 19,
       "status": "REJECT",
-      "train_gain": -2.36147564,
-      "train_score": 46.89872446
+      "train_gain": -1.23516752,
+      "train_score": 47.65367772
     },
     {
-      "holdout_delta": -1.1396858,
-      "holdout_score": 47.19565526,
-      "hypothesis": "generalize_strength+0.1",
+      "holdout_delta": -1.13089745,
+      "holdout_score": 46.13304364,
+      "hypothesis": "ablate_rate+0.1",
       "iteration": 20,
       "status": "REJECT",
-      "train_gain": -1.84479487,
-      "train_score": 47.41540522
+      "train_gain": -3.48774322,
+      "train_score": 45.40110201
     },
     {
-      "holdout_delta": -1.41200415,
-      "holdout_score": 46.92333692,
-      "hypothesis": "trace_rate+0.1",
+      "holdout_delta": -2.13775367,
+      "holdout_score": 45.12618742,
+      "hypothesis": "rediscover_weight-0.1",
       "iteration": 21,
       "status": "REJECT",
-      "train_gain": -3.80386515,
-      "train_score": 45.45633495
+      "train_gain": -3.02190425,
+      "train_score": 45.86694099
     },
     {
-      "holdout_delta": -0.76001373,
-      "holdout_score": 47.57532734,
-      "hypothesis": "reuse_threshold-1",
+      "holdout_delta": 1.57493496,
+      "holdout_score": 48.83887604,
+      "hypothesis": "ablate_rate-0.1",
       "iteration": 22,
       "status": "REJECT",
-      "train_gain": -2.36147564,
-      "train_score": 46.89872446
+      "train_gain": -2.93383804,
+      "train_score": 45.9550072
     },
     {
-      "holdout_delta": -3.74511802,
-      "holdout_score": 44.59022304,
-      "hypothesis": "reuse_threshold+1",
+      "holdout_delta": -2.13775367,
+      "holdout_score": 45.12618742,
+      "hypothesis": "rediscover_weight-0.1",
       "iteration": 23,
       "status": "REJECT",
-      "train_gain": -3.79785063,
-      "train_score": 45.46234946
+      "train_gain": -3.02190425,
+      "train_score": 45.86694099
     },
     {
-      "holdout_delta": -3.74511802,
-      "holdout_score": 44.59022304,
-      "hypothesis": "reuse_threshold+1",
+      "holdout_delta": -0.08830368,
+      "holdout_score": 47.17563741,
+      "hypothesis": "trace_rate-0.1",
       "iteration": 24,
       "status": "REJECT",
-      "train_gain": -3.79785063,
-      "train_score": 45.46234946
+      "train_gain": -3.11337981,
+      "train_score": 45.77546543
     }
   ],
   "variant": "transfer"
