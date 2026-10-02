@@ -31,20 +31,12 @@ jobs:
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Repository distinction doctor
-        run: python scripts/doctor.py
-      - name: Simulator tests
-        run: python -m unittest discover -s tests -v
-      - name: Specification basis contract tests
-        run: python decompose-task-space/spec/tests/test_spec_basis.py -v
-      - name: Autoresearch smoke
-        run: python autoresearch.py --variant exploit --iterations 3 --seed 42
-      - name: Specification scheduler smoke
-        run: python decompose-task-space/spec/simulate_spec_basis.py --limit 16 > /tmp/spec-probes.json
-      - name: Flywheel architecture simulation replay
-        run: python tools/simulate_flywheel_architecture.py --out /tmp/flywheel-receipt.json
-      - name: Dependency-atomic bead graph verification
-        run: python experiments/decomposition-policy/verify_decomposition_beads.py
+      - name: Set up locked dependency tooling
+        run: python -m pip install --disable-pip-version-check uv==0.12.22
+      - name: Verify dependency resolution
+        run: uv lock --check --python "$(command -v python)"
+      - name: Run all native repository checks
+        run: python scripts/check.py
 
   # Keep the protected branch's required check stable while gating every version.
   test:
