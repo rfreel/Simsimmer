@@ -1,0 +1,42 @@
+{
+  "schema": "simsimmer/agent-mail-pin-v1",
+  "upstream": "Dicklesworthstone/mcp_agent_mail_rust",
+  "version": "v0.3.29",
+  "commit": "ae1183b2489aa03f8852cc4d50221d4940981778",
+  "workspace_version": "0.3.29",
+  "pin_policy": "exact-release-tag-and-commit",
+  "install": {
+    "installer_ref": "ae1183b2489aa03f8852cc4d50221d4940981778",
+    "command": "curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/mcp_agent_mail_rust/ae1183b2489aa03f8852cc4d50221d4940981778/install.sh | bash -s -- --version v0.3.29 --verify --no-service --yes",
+    "notes": [
+      "Installer source is pinned to the release commit, not a movable branch or tag URL.",
+      "The installer fetches the explicit v0.3.29 release and performs checksum/signature verification unless explicitly disabled.",
+      "Do not install from main for reproducible Simsimmer coordination.",
+      "--no-service keeps bootstrap non-invasive; start Agent Mail explicitly when coordination is needed."
+    ]
+  },
+  "upgrade_policy": {
+    "automatic": false,
+    "requirements": [
+      "record candidate version and commit",
+      "review upstream changelog/release delta",
+      "run Agent Mail bootstrap smoke checks",
+      "verify Simsimmer bead/thread/reservation invariants",
+      "update this lock in a separately reviewable change"
+    ]
+  },
+  "authority": {
+    "agent_mail_owns": [
+      "agent identity for a coordination session",
+      "mail threads and acknowledgements",
+      "advisory file reservations and reservation conflicts"
+    ],
+    "agent_mail_does_not_own": [
+      "bead readiness",
+      "bead closure",
+      "evidence verification",
+      "promotion authority",
+      "Simsimmer evaluator or frozen seeds"
+    ]
+  }
+}

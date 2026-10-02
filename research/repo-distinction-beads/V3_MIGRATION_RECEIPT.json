@@ -1,0 +1,54 @@
+{
+  "schema": "repo-distinction-beads/v3-migration-receipt-v1",
+  "status": "PASS",
+  "source": {
+    "name": "validated_atomic_v2 bead graph",
+    "sha256": "2ccd32ff55445cfd01ae68f1172b8711d8d071c035fb9ae842aa5570b781a37b",
+    "beads": 106
+  },
+  "projection": {
+    "sha256": "348eb20ba5ba4e6af3ac0e11fcafecb8bb9a66345c0e014a94a2886987ce2fc1",
+    "beads": 106,
+    "persisted_as_canonical": false
+  },
+  "migration": {
+    "legacy_dependency_edges": 159,
+    "typed_relation_instances": 159,
+    "migration_relation": "WAITS_FOR",
+    "missing_relation_targets": [],
+    "legacy_ready_set": ["RG-P0-01"],
+    "typed_ready_set": ["RG-P0-01"],
+    "ready_set_equal": true,
+    "dag_acyclic": true,
+    "unit_critical_path_before": 35,
+    "unit_critical_path_after": 35
+  },
+  "state_axes": {
+    "work_state": true,
+    "evidence_state": true,
+    "promotion_state": true
+  },
+  "acceptance_authority_probe": {
+    "oracle": 44,
+    "review_witness": 30,
+    "mixed": 11,
+    "unresolved": 21,
+    "status": "PROVISIONAL"
+  },
+  "subject_binding": {
+    "host_repo": "rfreel/Simsimmer",
+    "binding_bead": "RG-P0-01",
+    "status": "UNBOUND"
+  },
+  "global_gates_added": ["G11", "G12"],
+  "promotion_scope": {
+    "promote_now": ["P0 contract representation"],
+    "defer": ["P1-P8 v3 canonical migration", "subject-root-specific execution", "oracle implementation"]
+  },
+  "limitations": [
+    "The 106-bead v3 projection is a representation probe, not canonical state.",
+    "Acceptance-authority classes are conservative provisional classifications.",
+    "Legacy depends_on relations are projected as WAITS_FOR to preserve direction and readiness; semantic reclassification requires explicit evidence.",
+    "Unit critical path is structural, not a wall-clock estimate."
+  ]
+}

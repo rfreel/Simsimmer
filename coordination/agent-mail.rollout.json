@@ -1,0 +1,83 @@
+{
+  "schema": "simsimmer/agent-mail-rollout-v1",
+  "pin": "coordination/agent-mail.lock.json",
+  "status": "R0_INTEGRATED_R1_NOT_RUN",
+  "thread_key": "exact_bead_id",
+  "coordination_project": "active_simsimmer_checkout_absolute_path",
+  "subject_root_policy": "independent_from_agent_mail_project_and_bound_by_RG-P0-01",
+  "default_reservation_ttl_seconds": 3600,
+  "stages": [
+    {
+      "id": "R0",
+      "name": "pin_and_contract",
+      "status": "complete",
+      "evidence": [
+        "coordination/agent-mail.lock.json",
+        "coordination/AGENT_MAIL.md",
+        "coordination/install-agent-mail.sh",
+        "AGENTS.md"
+      ]
+    },
+    {
+      "id": "R1",
+      "name": "single_agent_smoke_on_RG-P0-01",
+      "status": "not_run",
+      "requires": ["R0"],
+      "pass": [
+        "pinned version observed",
+        "project ensured from absolute checkout path",
+        "agent registered",
+        "bead-ID thread round trip succeeds",
+        "narrow reservation create/release succeeds",
+        "Agent Mail project identity recorded in RG-P0-01 attempt receipt"
+      ]
+    },
+    {
+      "id": "R2",
+      "name": "two_agent_nonoverlap_pilot",
+      "status": "blocked",
+      "requires": ["R1", "RG-P0-01 closed", "RG-P0-02 closed"],
+      "pass": [
+        "two runnable beads use distinct thread IDs",
+        "write reservations are disjoint",
+        "handoff receipts are complete",
+        "no coordination state is misclassified as verification"
+      ]
+    },
+    {
+      "id": "R3",
+      "name": "controlled_reservation_conflict",
+      "status": "blocked",
+      "requires": ["R2"],
+      "pass": [
+        "conflict visible before overlapping write",
+        "agents split or serialize work",
+        "no false bead dependency is created from file contention",
+        "failed/retried attempts remain visible"
+      ]
+    },
+    {
+      "id": "R4",
+      "name": "router_coordination_features",
+      "status": "blocked",
+      "requires": ["R3"],
+      "pass": [
+        "claim availability and reservation contention are derived routing features",
+        "blocked beads cannot become runnable by score",
+        "routing receipt includes coordination snapshot identity/time"
+      ]
+    },
+    {
+      "id": "R5",
+      "name": "broader_multi_agent_execution",
+      "status": "blocked",
+      "requires": ["R4", "subject root bound", "closure authority explicit for active beads"],
+      "pass": [
+        "stable thread convention",
+        "tested stale reservation recovery",
+        "stable handoff contract",
+        "router cannot acquire verification or promotion authority"
+      ]
+    }
+  ]
+}
