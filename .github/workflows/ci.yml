@@ -14,9 +14,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
+  verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.12']
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -26,7 +30,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
-          python-version: '3.12'
+          python-version: ${{ matrix.python-version }}
       - name: Repository distinction doctor
         run: python scripts/doctor.py
       - name: Simulator tests
@@ -41,3 +45,15 @@ jobs:
         run: python tools/simulate_flywheel_architecture.py --out /tmp/flywheel-receipt.json
       - name: Dependency-atomic bead graph verification
         run: python experiments/decomposition-policy/verify_decomposition_beads.py
+
+  # Keep the protected branch's required check stable while gating every version.
+  test:
+    needs: verify
+    if: ${{ always() }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require every Python version to pass
+        env:
+          VERIFY_RESULT: ${{ needs.verify.result }}
+        run: test "$VERIFY_RESULT" = success
