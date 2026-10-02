@@ -1,0 +1,80 @@
+{
+  "id": "REPO-DEFAULTS-20261002-01",
+  "owner": "codex-root",
+  "branch": "agent/repo-defaults-20261002",
+  "root_sha": "bca947ce2c189dab213a6cde8b648a430bef26f1",
+  "write_paths": [
+    "scripts/check.py",
+    "scripts/README.md",
+    ".github/workflows/ci.yml",
+    ".github/dependabot.yml",
+    ".gitignore",
+    ".python-version",
+    "uv.lock",
+    "experiments/REPO-DEFAULTS-20261002-01/**"
+  ],
+  "read_dependencies": [
+    "AGENTS.md",
+    "docs/OWNERSHIP.md",
+    "pyproject.toml",
+    ".github/workflows/ci.yml"
+  ],
+  "status": "locally_verified",
+  "invariants": [
+    "No changes to evaluator, tests, seeds, vendor, controller or live state",
+    "Preserve all seven existing checks and stable required test job",
+    "Same operating-layer branch/root for candidate comparison"
+  ],
+  "candidate_simulation": {
+    "method": "Executable static gate-set comparison; not empirical product performance evidence",
+    "required_checks": [
+      "doctor",
+      "simulator-tests",
+      "spec-basis-tests",
+      "autoresearch-smoke",
+      "spec-scheduler-smoke",
+      "architecture-replay",
+      "bead-verification"
+    ],
+    "candidates": {
+      "shared-native-checks": {
+        "missing": [],
+        "retains_all_checks": true
+      },
+      "generic-unittest-only": {
+        "missing": [
+          "architecture-replay",
+          "autoresearch-smoke",
+          "bead-verification",
+          "doctor",
+          "spec-basis-tests",
+          "spec-scheduler-smoke"
+        ],
+        "retains_all_checks": false
+      }
+    },
+    "selected": "shared-native-checks"
+  },
+  "acceptance": [
+    "One local command executes every native CI check",
+    "Real offline lock and supported pinned local Python",
+    "CI invokes shared command and preserves aggregate required check",
+    "Negative wrapper witness propagates failing command",
+    "Protected and live state paths remain unchanged"
+  ],
+  "verification": {
+    "commands": [
+      "uv lock --offline --python 3.12.14",
+      "uv sync --locked --offline",
+      "uv run --locked --offline python scripts/check.py"
+    ],
+    "result": "PASS all seven native checks",
+    "negative_witness": "deliberate exit9 propagated and following check not run",
+    "remote_ruleset": {
+      "id": 21214975,
+      "status": "PROVEN",
+      "coverage": "active default-branch ruleset, PR/test/strict-up-to-date/resolution/deletion/non-fast-forward; no bypass actors; current user never bypass",
+      "remaining": "Issue10 additional Actions/security/merge preferences remain incomplete"
+    }
+  }
+}
