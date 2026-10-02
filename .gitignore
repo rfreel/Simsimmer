@@ -1,6 +1,10 @@
 __pycache__/
 *.pyc
 .venv/
+.env
+.env.*
+!.env.example
+!.env.sample
 run-*.json
 traces/raw/**
 generated/tmp/**
