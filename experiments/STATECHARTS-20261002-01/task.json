@@ -1,0 +1,77 @@
+{
+  "id": "STATECHARTS-20261002-01",
+  "owner": "codex-statechart-integration",
+  "branch": "agent/statecharts-20261002",
+  "root_sha": "b5f30d6227fe7cea099c74760567af75a0ce7d15",
+  "write_paths": [
+    "autoresearch.py",
+    "tools/statecharts/**",
+    "scripts/check.py",
+    "docs/RESEARCH_STATECHART.md",
+    "experiments/STATECHARTS-20261002-01/**"
+  ],
+  "read_dependencies": [
+    "AGENTS.md",
+    "docs/OWNERSHIP.md",
+    "sim/simulator.py",
+    "variants/**"
+  ],
+  "status": "locally_verified_pending_hosted_ci",
+  "invariants": [
+    "No evaluator, protected tests, variants, lock, vendor or live state modifications",
+    "Preserve gate numeric boundaries and receipt schema",
+    "Infrastructure errors propagate, never candidate REJECT"
+  ],
+  "candidate_simulation": {
+    "method": "Static transition walk before implementation; no product-performance claim",
+    "candidates": {
+      "diagram-only": "Cannot enforce effect ordering or validate runtime traces",
+      "native-sequential-machine": "Matches existing Python sequential controller with no added dependency",
+      "hierarchical-engine": "No observed hierarchy/concurrency need; additional dependency unjustified"
+    },
+    "selected": "native-sequential-machine"
+  },
+  "acceptance": [
+    "Actual controller transitions enforced",
+    "KEEP/REJECT and promotion boundary tests",
+    "Dry run and lock error preserve state",
+    "Generated diagram drift checked in native CI"
+  ],
+  "verification": {
+    "commands": [
+      "python3 -m unittest discover -s tools/statecharts -v",
+      "python3 -m tools.statecharts.render --check",
+      "python3 scripts/check.py",
+      "real simulator baseline HEAD versus modified receipt comparison, exploit iterations3 seed42, ignore timestamp only",
+      "git diff --exit-code HEAD -- sim tests variants evaluator.lock.json state vendor"
+    ],
+    "result": "PASS 16 lifecycle/export tests, all nine native checks; baseline receipt equivalence independently checked all four variants",
+    "failed_premises": [
+      "Initial synthetic metric omitted objective fields; fixture corrected before verification"
+    ],
+    "limitations": [
+      "Flat synchronous lifecycle only",
+      "No persistence transaction, durable lifecycle trace, process mutex, automatic retry or crash recovery",
+      "Machine validates supplied guard truth; native controller retains authoritative numeric gate calculation"
+    ],
+    "rollback": "Restore scoped changed paths from b5f30d6227fe7cea099c74760567af75a0ce7d15; no live state or evaluator changes",
+    "mutation_witness": {
+      "mutation": "Force candidate KEEP gate false in disposable copy",
+      "failing_exit": 1,
+      "restored_exit": 0,
+      "test": "test_keep_and_dry_run",
+      "source_unchanged": true
+    },
+    "toolkit_integration": {
+      "schema_version": 1,
+      "contract_sha256": "e2da05d716193d0ffc8dd78807d565bbabdbe6ed282d0116b4347c8c20e6570d",
+      "commands": [
+        "python -m tools.statecharts.export --contract-out NEW_CONTRACT --trace-out NEW_TRACE --iterations 3 --seed 42",
+        "statechart_contract.py validate CONTRACT",
+        "statechart_contract.py trace CONTRACT TRACE"
+      ],
+      "result": "STRUCTURALLY_VALID and TRACE_CONFORMS, terminal complete; unvisited transitions explicitly reported"
+    },
+    "review": "Independent read-only review found no arithmetic/receipt regression; two suggested effect-boundary checks added"
+  }
+}

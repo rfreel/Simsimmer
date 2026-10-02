@@ -8,6 +8,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Tuple
 
+from tools.statecharts.research import ResearchLifecycle
+
 from sim.simulator import BASELINE_POLICY, PARAM_BOUNDS, aggregate, metrics_dict, normalize_policy
 
 ROOT = Path(__file__).resolve().parent
@@ -89,7 +91,23 @@ def main() -> int:
     ap.add_argument("--write", action="store_true")
     args = ap.parse_args()
 
+    return run(args)
+
+
+def run(args, lifecycle: ResearchLifecycle | None = None) -> int:
+    """Execute one run; an injected lifecycle exposes evidence to controller tests."""
+    lifecycle = lifecycle or ResearchLifecycle()
+    try:
+        return _run(args, lifecycle)
+    except (Exception, SystemExit):
+        lifecycle.fail()
+        raise
+
+
+def _run(args, lifecycle: ResearchLifecycle) -> int:
+    lifecycle.send("start")
     check_lock()
+    lifecycle.send("lock_valid")
     variant = load_variant(args.variant)
     rng = random.Random(args.seed or int(datetime.now(timezone.utc).strftime("%Y%m%d")))
     current = load_policy(args.variant)
@@ -98,9 +116,11 @@ def main() -> int:
     current_holdout = objective(holdout, variant)
     baseline_holdout = current_holdout
 
+    lifecycle.send("baseline_evaluated")
     rows = []
     keeps = 0
     for i in range(1, args.iterations + 1):
+        lifecycle.send("candidate_started")
         cand, hypothesis = mutate(current, variant, rng)
         c_train, c_holdout = evaluate(cand, variant)
         c_score = objective(c_train, variant)
@@ -116,6 +136,7 @@ def main() -> int:
             nonregress = c_holdout_score >= current_holdout - variant.get("compression_score_tolerance", 0.05)
             keep = keep or (smaller and nonregress)
 
+        lifecycle.send("keep" if keep else "reject", **({"accepted": keep} if keep else {"rejected": not keep}))
         rows.append({
             "iteration": i,
             "hypothesis": hypothesis,
@@ -130,7 +151,9 @@ def main() -> int:
             current_score, current_holdout = c_score, c_holdout_score
             keeps += 1
 
+    lifecycle.send("trials_finished")
     canonical = canonical_evaluate(current)
+    lifecycle.send("canonical_evaluated")
     receipt = {
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "variant": args.variant,
@@ -151,11 +174,13 @@ def main() -> int:
     print(json.dumps(receipt, indent=2, sort_keys=True))
 
     if args.write:
+        lifecycle.send("write_requested", write_enabled=args.write)
         STATE_DIR.mkdir(exist_ok=True)
         state_path(args.variant).write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
         with RESULTS.open("a", encoding="utf-8") as f:
             f.write(json.dumps({k: receipt[k] for k in receipt if k != "trials"}, sort_keys=True) + "\n")
 
+        lifecycle.send("receipts_written")
         champion_path = STATE_DIR / "champion.json"
         old_score = float("-inf")
         old_basis = float("inf")
@@ -166,7 +191,13 @@ def main() -> int:
         better = canonical.fitness > old_score + 1e-9
         tie_but_smaller = abs(canonical.fitness - old_score) <= 1e-9 and canonical.active_basis < old_basis - 1e-9
         if better or tie_but_smaller:
+            lifecycle.send("promote", promotable=better or tie_but_smaller)
             champion_path.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
+            lifecycle.send("champion_written")
+        else:
+            lifecycle.send("retain", not_promotable=not (better or tie_but_smaller))
+    else:
+        lifecycle.send("dry_run", dry_run=not args.write)
 
     return 0
 
