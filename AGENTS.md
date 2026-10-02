@@ -44,6 +44,8 @@ Never use `main` as a scratch branch. Never let two agents own the same write su
 
 Before changing files, declare a task ID and intended write zone in the task/experiment record. Prefer disjoint file ownership. If another live agent owns the same surface, switch to a different task or create an isolated branch/worktree; do not race edits.
 
+Every completed task leaves enough evidence for a fresh agent to resume: root SHA, task/experiment ID, files changed, commands executed, receipts, residuals, and rollback point.
+
 Mutable research state: `state/*.json`, `state/results.jsonl`.
 Fixed substrate unless a separately reviewed evaluator-change task explicitly says otherwise: `sim/`, `tests/`, `evaluator.lock.json`.
 
