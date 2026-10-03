@@ -9,6 +9,8 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[1]
 CHECKS = (
     ("Repository doctor", ("scripts/doctor.py",), None),
+    ("Research lifecycle tests", ("-m", "unittest", "discover", "-s", "tools/statecharts", "-v"), None),
+    ("Research lifecycle diagram", ("-m", "tools.statecharts.render", "--check"), None),
     ("Simulator tests", ("-m", "unittest", "discover", "-s", "tests", "-v"), None),
     ("Specification basis tests", ("decompose-task-space/spec/tests/test_spec_basis.py", "-v"), None),
     ("Autoresearch smoke", ("autoresearch.py", "--variant", "exploit", "--iterations", "3", "--seed", "42"), None),
